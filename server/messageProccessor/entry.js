@@ -28,7 +28,8 @@ function greetByTime(timeDiff) {
 }
 
 const entry = function (sender, text) {
-	menuProvider.pushMenu(sender);
+	sendApi.callSendAPI(menuProvider.generateMenu(sender));
+	
 	
 	if (isNew(sender) && isNotActive(sender)) {
 		// TODO: Register user to db
