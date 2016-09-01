@@ -7,6 +7,12 @@ const request = require('request');
 const token = require('./../secrets').token;
 
 module.exports = {
+	generateTextPayload:function(id,text){
+	return{
+		recipient: {id:id},
+		message: text,
+	}
+	},
 	callSendAPI: function(messageData){
 		request({
 			uri: 'https://graph.facebook.com/v2.6/me/messages',

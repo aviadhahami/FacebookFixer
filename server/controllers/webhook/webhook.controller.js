@@ -3,7 +3,6 @@
  */
 'use strict';
 const request = require('request');
-const token = require('./../../secrets').token;
 
 const botApi = require('./../../api/botApi');
 const sendApi = require('./../../api/sendAPI');
@@ -33,21 +32,7 @@ function sendTextMessage(sender, text) {
 	sendApi.callSendAPI(botApi.loadingIndicator(sender));
 	setTimeout(
 		function(){
-			request({
-				url: 'https://graph.facebook.com/v2.6/me/messages',
-				qs: {access_token:token},
-				method: 'POST',
-				json: {
-					recipient: {id:sender},
-					message: messageData,
-				}
-			}, function(error, response, body) {
-				if (error) {
-					console.log('Error sending messages: ', error)
-				} else if (response.body.error) {
-					console.log('Error: ', response.body.error)
-				}
-			})
+			sendApi.callSendAPI(sendApi.generateTextPayload(sender,text));
 		}
 		,3000)
 	
