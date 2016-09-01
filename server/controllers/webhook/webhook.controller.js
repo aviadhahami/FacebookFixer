@@ -16,7 +16,11 @@ function get(req,res){
 function post(req, res) {
 
 // Send menu to sever
-	sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
+	sendApi.callThreadAPI(clientSettingsProvider.generateMenu()).then(function(res){
+		console.log('res from menu', res);
+	},function(err){
+		console.log('err from menu', err);
+	});
 	sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
 	
 	let messaging_events = req.body.entry[0].messaging;
