@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>SmokeBeat Poll</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="/css/bootstrap.css" rel="stylesheet">-->
+    <style>
+        .container {
+            width: 1000px;
+            padding: 30px 0 30px;
+            text-align: left;
+
+        }
+        .zoom {
+            zoom: 2;
+            -moz-transform: scale(2);
+            -moz-transform-origin: 0 0;
+        }
+        header {
+            margin-bottom: 30px;
+        }
+        header h1 {
+            margin-top: 30px;
+        }
+        header img {
+            width: 160px;
+            /*margin: 10px 20px;*/
+        }
+        form {
+            direction: ltr;
+            text-align: left;
+            margin-left: 20px;
+        }
+        form.ltr .control-label{
+            text-align: left;
+        }
+        form.ltr .form-group {
+            padding-bottom: 20px;
+            border-bottom: solid 1px #ccc;
+            text-align: left;
+        }
+        form.ltr .form-group:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        form.ltr input[type=radio] {
+            margin-top: 6px;
+            float: left;
+            width: auto;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+        form.ltr label {
+            line-height:43px;
+            padding-left:5px;
+            padding-top: 0 !important;
+
+        }
+        form.ltr button {
+            /*float: left;*/
+            margin-top: 10px;
+            padding: 10px 25px;
+        }
+        .error {
+            color: red;
+        }
+        [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+            display: none !important;
+        }
+    </style>
+</head>
+<body ng-app="datersettings">
+<div class="container" ng-controller="PollController">
+    <!--<div class="answers">{{answers}}</div>-->
+    <header class="clearfix">
+        <h1 class="pull-left">Settings</h1>
+    </header>
+    <form class="form-horizontal ltr" ng-cloak>
+        <div class="form-group">
+            <label class="control-label col-sm-4">{{questionText("0")}}</label>
+            <div class="col-sm-6">
+                <select class="form-control" ng-model="user.gender" ng-options="x.name for x in genders"></select>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">{{questionText("3")}}</label>
+            <div class="col-sm-6">
+                <textarea class="form-control" ng-model="user.description"> </textarea>
+            </div>
+            <div class="col-sm-2"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">{{questionText("1")}}</label>
+            <div class="col-sm-2">
+                <select class="form-control" ng-model="user.minAge" ng-options="x for x in ages"></select>
+            </div>
+            <div class="col-sm-1">
+                <label>to</label>
+            </div>
+
+            <div class="col-sm-2">
+                <select class="form-control" ng-model="user.maxAge" ng-options="x for x in ages"></select>
+            </div>
+            <div class="col-sm-16"></div>
+            <div class="col-sm-16"></div>
+
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">{{questionText("4")}}</label>
+            <div class="col-sm-4">
+                <input vs-google-autocomplete="{ types:['(cities)'] }"
+                       ng-model="user.city"
+                       type="text"
+                       name="city"
+                       vs-latitude="user.lat"
+                       vs-longitude="user.lng"
+                       id="city"
+                       class="form-control"
+                       placeholder="Enter city name">
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-4">{{questionText("2")}}</label>
+            <div class="col-sm-2">
+                <select class="form-control" ng-model="user.distance" ng-options="x for x in ages"></select>
+                <div class="col-sm-6"></div>
+
+            </div>
+        </div>
+        <div class="form-group text-center">
+            <div ng-class="{'error': !submitSuccess}" ng-show="statusMessage">{{statusMessage}}</div>
+            <button type="submit" class="btn btn-info" ng-click="post()" ng-disabled="disablePost">Send</button>
+        </div>
+    </form>
+</div>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<!--<script type="text/javascript" src="/js/jquery.js"></script>-->
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<!--<script type="text/javascript" src="/js/bootstrap.min.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular.min.js"></script>
+<!--<script type="text/javascript" src="/js/angular/angular.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0/angular-route.min.js"></script>
+<!--<script type="text/javascript" src="/js/angular-route/angular-route.js"></script>-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<!--<script type="text/javascript" src="/js/underscore/underscore-min.js"></script>-->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK5fP7CZgCqP9xk0lpApEjKQ3qMoqONCU&libraries=places"></script>
+<script src="vs-google-autocomplete.js"></script>
+<script src="places-autocomplete.js"></script>
+
+
+<script type="text/javascript">
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    angular.module('datersettings', ['ngRoute','vsGoogleAutocomplete'])
+            .controller('PollController', ['$scope', '$http', '$timeout', function($scope, $http, $timeout){
+                $scope.questions =  [
+                    {id: "0",aid: "a0", question:"Are you looking for",multiple: true},
+                    {id: "1",aid: "a1", question:"Age Range"},
+                    {id: "2",aid: "a2", question:"Distance in (km)"},
+                    {id: "3",aid: "a3", question:"Description"},
+                    {id: "4",aid: "a4", question:"City", multiple: true}
+                   ];
+                $scope.ages = [18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60];
+              
+                $scope.genders = [{name:"female"},{name:"male"}];
+                $scope.questionText = function(id){
+                    return _.findWhere($scope.questions, {id: id}).question;
+                };
+                $scope.questionName = function(id){
+                    return _.findWhere($scope.questions, {id: id}).aid;
+                };
+                $scope.user = {
+                    id: getParameterByName('id')
+                };
+                $scope.disablePost = false;
+                $scope.statusMessage = '';
+                $scope.submitSuccess = false;
+                $scope.post = function(){
+//                    console.log($scope.user);
+                    $scope.disablePost = true;
+                    $.ajax({
+                        type: "POST",
+                        url: '/settings/',
+                        data: $scope.user,
+                        dataType: "json",
+                        timeout: 15000,
+                        success: function (res) {
+                            if (res.success){
+                                $scope.submitSuccess = true;
+                                $scope.statusMessage = "Updated succesfully";
+                            }
+                            else {
+                                $scope.statusMessage = "Updated succesfully";
+                                $scope.disablePost = false;
+                            }
+                            $scope.$apply();
+                        },
+                        error: function () {
+                            $scope.statusMessage = "Updated succesfully";
+                            $scope.disablePost = false;
+                            $scope.$apply();
+                        },
+                        complete: function(){
+                            $timeout(function(){
+                                $scope.submitSuccess = false;
+                                $scope.statusMessage = "";
+                            }, 3000);
+                        }
+                    });
+                }
+            }]);
+</script>
+</body>
+</html>
