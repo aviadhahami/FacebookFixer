@@ -8,70 +8,66 @@
 </head>
 <body ng-app="BlankApp" ng-cloak>
 <div ng-controller="BlankAppController" class="md-padding" ng-cloak>
-    <div id="fb-root"> </div>
+    <!-- <div id="fb-root"> </div>
     <div layout="row">
-    <!--<fb:login-button scope="public_profile,email" onlogin="getUserInfo()" max-rows="1"
-                     size="large"></fb:login-button-->>
+    <fb:login-button scope="public_profile,email" onlogin="getUserInfo()" max-rows="1"
+                     size="large"></fb:login-button>
+    </div> -->
+    <md-icon md-svg-icon="./images/settings-icon.svg"></md-icon>
+    <h3 class="md-title"> Search settings</h3>
+    <div>
+        <md-checkbox ng-model="user.shareLocation" aria-label="Share location">
+            Share location
+        </md-checkbox>
     </div>
     <div>
-        <h1 class="md-title">My age is</h1>
-        <div layout="row">
-            <md-input-container style="margin-right: 10px;">
-                <label>Age</label>
-                <!-- TODO: change to regular input -->
-                <md-select ng-model="user.age">
-                    <md-option ng-repeat="age in ages" value="{{age}}">{{age}}</md-option>
-                </md-select>
-            </md-input-container>
+        <div flex="10" layout layout-align="center center">
+            <h1 class="md-title" >Search radius: </h1>
         </div>
-    <div>
-        <h1 class="md-title">Diet</h1>
-        <div layout="row">
-            <md-input-container>
-                <label>Diet</label>
-                <md-select ng-model="user.diet" md-selected-text="getSelectedDiet()">
-                    <md-optgroup label="diet">
-                        <md-option ng-value="diet" ng-repeat="diet in diets">{{diet}}</md-option>
-                    </md-optgroup>
-                </md-select>
-            </md-input-container>
+        <div flex="20" layout layout-align="center center">
+            <md-button class="md-raised md-primary">Km</md-button>
+            <md-button class="md-raised md-secondary">mi</md-button>
+        </div>
+        <div layout>
+            <md-slider flex class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1" max="150" aria-label="rating">
+            </md-slider>
         </div>
     </div>
     <div>
-        <h1 class="md-title">Search radius</h1>
-        <div layout="row">
-            <md-input-container style="margin-right: 10px;">
-                <label>From</label>
-                <md-select ng-model="user.minAge">
-                    <md-option ng-repeat="age in ages" value="{{age}}">{{age}}</md-option>
-                </md-select>
-            </md-input-container>
-            <md-input-container>
-                <label>To</label>
-                <md-select ng-model="user.maxAge">
-                    <md-option ng-repeat="age in ages" value="{{age}}">{{age}}</md-option>
-                </md-select>
-            </md-input-container>
-        </div>
+        <md-checkbox ng-model="user.shareFriends" aria-label="Share friends">
+            Share facebook friends list
+        </md-checkbox>
     </div>
     <div>
-        <h1 class="md-title">in Distance of (km)</h1>
-        <div layout="row">
-            <md-input-container style="margin-right: 10px;">
-                <md-button class="md-raised md-primary">Km</md-button>
-                <md-button ng-disabled="true" class="md-raised md-primary">mi</md-button>   
-                <label>Please choose distance</label>
-                <md-select ng-model="user.distance">
-                    <md-option ng-repeat="distance in distances" value="{{distance}}">{{distance}}</md-option>
-                </md-select>
-            </md-input-container>
-        </div>
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>Age</label>
+            <input name="age" ng-model="user.age"/>
+            <div class="hint">Required if you want to search for Pubs</div>
+        </md-input-container>
     </div>
-    <md-button class="md-raised md-primary"  ng-click="post()">Send</md-button>
-    <!--<div class="form-group text-center">-->
-        <!--<div ng-class="{'error': !submitSuccess}" ng-show="statusMessage">{{statusMessage}}</div>-->
-        <!--<button type="submit" class="btn btn-info" ng-click="post()" ng-disabled="disablePost">Send</button>-->
-    <!--</div>-->
+    <div>
+        <md-input-container>
+            <label>Diet</label>
+            <md-select ng-model="user.diet">
+                <md-option><em>Regular</em></md-option>
+                <md-option ng-repeat="diet in diets" ng-value="user.diet" ng-disabled="$index === 1">
+                    {{user.diet}}
+                </md-option>
+            </md-select>
+        </md-input-container>
+    </div>
+
+    <div layout layout-sm="row">
+        <md-input-container flex>
+            <input type="submit" value="SAVE" ng-disabled="myForm.$invalid" class="md-primary" aria-label="Save" >
+        </md-input-container>
+        <md-input-container flex>
+            <input type="button" ng-click="cancel()" value="CANCEL" aria-label="Cancel">
+        </md-input-container>
+    </div>
+
+    <md-button class="md-raised md-primary"  ng-click="post()">Save</md-button>
+
 </div>
 
 <!-- Angular Material requires Angular.js Libraries -->
@@ -85,15 +81,11 @@
 <!-- Angular Material Library -->
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-<!--<script type="text/javascript" src="/js/underscore/underscore-min.js"></script>-->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK5fP7CZgCqP9xk0lpApEjKQ3qMoqONCU&libraries=places"></script>
 
 <!-- Your application bootstrap  -->
 <script type="text/javascript">
-    /**
-     * You must include the dependency on 'ngMaterial'
-     */
-    function getUserInfo() {
+
+    /*function getUserInfo() {
 
 //                    var _self = this;
 
@@ -111,7 +103,59 @@
         var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                 results = regex.exec(location.search);
         return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }
+    }*/
+
+
+
+
+
+            $scope.showEdit = function (index, person, ev) {
+                $scope.index = index;
+                $mdDialog.show({
+                    controller: PersonController,
+                    templateUrl: './views/editContact.html',
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    preserveScope: true,
+                    clickOutsideToClose: true,
+                    locals: { person : this.person }
+                });
+            };
+
+            function PersonController($scope, $mdDialog, $rootScope, person) {
+                $scope.person = person;
+
+                $scope.cancel = function() {
+                    $mdDialog.cancel();
+                };
+
+                $scope.saveContact = function (contactInfo) {
+                    $rootScope.$broadcast("contactToSave",
+                        {
+                            firstName: contactInfo.newFirstName,lastName: contactInfo.newLastName,company: contactInfo.newCompany,phone: contactInfo.newPhone,email: contactInfo.newEmail
+                        }
+                    );
+                    /*exit dialog*/
+                    $mdDialog.cancel();
+                };
+
+                $scope.updateContact = function () {
+                    $mdDialog.show(
+                        $mdDialog.alert()
+                            .title('Contact has been updated!')
+                            .ok('OK')
+                    );
+                    $mdDialog.cancel();
+                };
+            }
+
+
+
+
+
+
+
+
 
 
     angular.module('BlankApp', ['ngMaterial', 'ngMessages'])
@@ -119,6 +163,7 @@
                 $mdThemingProvider.theme('default')
 
             })
+
             .controller('BlankAppController',function($scope,$q, $http,$rootScope, $window) {
                 $rootScope.user = {};
 
