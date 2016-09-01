@@ -37,8 +37,7 @@ function sendTextMessage(sender, text) {
 			
 			let firstName = res.first_name;
 			let text =`Hi ${firstName}, how may I help you today?`;
-			console.log(sendApi.generateTextPayload(sender, text));
-			sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
+			sendApi.callSendAPI(sendApi.generateTextPayload(sender, res));
 		},function(err){
 			console.log('err from prome',err)
 		});
