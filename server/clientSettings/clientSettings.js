@@ -9,16 +9,16 @@ module.exports = {
 			"setting_type": "call_to_actions",
 			"thread_state": "existing_thread",
 			"call_to_actions": [
-				{
-					"type": "web_url",
-					"title": "Search Settings",
-					"url": "/client/index.html"
-				},
-				{
-					"type":"web_url",
-					"title":"View Website",
-					"url":"http://google.com/"
-				},
+				// {
+				// 	"type": "web_url",
+				// 	"title": "Search Settings",
+				// 	"url": "/client/index.html"
+				// },
+				// {
+				// 	"type":"web_url",
+				// 	"title":"View Website",
+				// 	"url":"http://google.com/"
+				// },
 				{
 					"type": "postback",
 					"title": "History",
