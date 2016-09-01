@@ -10,9 +10,9 @@ module.exports = {
 			"thread_state" : "existing_thread",
 			"call_to_actions":[
 				{
-					"type":"postback",
+					"type":"web_url",
 					"title":"Search Settings",
-					"payload":"Sreach_Settings_Payload"
+					"payload":"client/index.html"
 				},
 				{
 					"type":"postback",
