@@ -27,10 +27,9 @@ module.exports = {
 			json: payload
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
-				var recipientId = body.recipient_id;
-				var messageId = body.message_id;
 				deferred.resolve(body);
 			} else {
+				console.log('REJETED!');
 				deferred.reject(error,response, body);
 			}
 		});
