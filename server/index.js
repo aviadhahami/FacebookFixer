@@ -18,6 +18,14 @@ app.use(bodyParser.urlencoded({extended: false}));
 // Process application/json
 app.use(bodyParser.json());
 
+sendApi.callThreadAPI(clientSettingsProvider.generateMenu()).then(function(res){
+	console.log('res from menu', res);
+	sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
+},function(err,response, body){
+	console.log('err from menu', err,response,body);
+});
+
+
 
 // Bind routes
 require('./routes')(app);
