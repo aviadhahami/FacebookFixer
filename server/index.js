@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const sendApi = require('./api/sendAPI');
 const clientSettingsProvider = require('./clientSettings/clientSettings');
-
+const path = require('path');
 
 
 let PORT = 5000;
@@ -24,6 +24,8 @@ sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
 sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
 
 
+// Serve client
+app.use(express.static(__dirname,'..','client'));
 
 
 // Bind routes
