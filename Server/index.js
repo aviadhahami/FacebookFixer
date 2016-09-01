@@ -1,5 +1,3 @@
-'use strict'
-
 const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
@@ -21,11 +19,11 @@ app.get('/', function (req, res) {
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
 
-	res.send('Im working');
-    // if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
-    //     res.send(req.query['hub.challenge'])
-    // }
-    // res.send('Error, wrong token')
+	// res.send('Im working');
+    if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
+        res.send(req.query['hub.challenge'])
+    }
+    res.send('Error, wrong token')
 })
 
 // Spin up the server
