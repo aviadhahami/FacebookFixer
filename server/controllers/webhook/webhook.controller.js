@@ -3,7 +3,7 @@
  */
 'use strict';
 const request = require('request');
-const token = require('./secrets').token;
+const token = require('./../../secrets').token;
 
 
 function get(req,res){
