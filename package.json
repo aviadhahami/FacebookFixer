@@ -4,7 +4,7 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "bot":"node server/index.js"
+    "bot": "node server/index.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,8 @@
   "dependencies": {
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
+    "q": "^1.4.1",
     "request": "^2.74.0",
+    "twilio": "^2.9.2"
   }
 }
