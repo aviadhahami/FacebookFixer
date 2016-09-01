@@ -29,16 +29,22 @@ function post(req, res) {
 
 function sendTextMessage(sender, text) {
 	let messageData = { text:text };
-	sendApi.callSendAPI(botApi.loadingIndicator(sender));
-	sendApi.getUserData(sender).then(function(res){
-		console.log('my res',res);
-		let firstName = res.first_name || '';
-		let text =`Hi ${firstName}, how may I help you today?`;
-		console.log(sendApi.generateTextPayload(sender, text));
-		// sendApi.callSendAPI();
+	sendApi.callSendAPI(botApi.loadingIndicator(sender)).then(function(res){
+		
+		sendApi.getUserData(sender).then(function(res){
+			console.log('my res',res);
+			let firstName = res.first_name || '';
+			let text =`Hi ${firstName}, how may I help you today?`;
+			console.log(sendApi.generateTextPayload(sender, text));
+			// sendApi.callSendAPI();
+		},function(err){
+			console.log('err from prome',err)
+		});
+		
 	},function(err){
-		console.log('err from prome',err)
+		
 	});
+	
 	
 	
 	
