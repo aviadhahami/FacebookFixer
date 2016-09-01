@@ -5,9 +5,9 @@ function fetchRemote(params) {
 
 function fetchNearby(params){
 	
-};
+}
 
 module.exports = {
-fetchRemote:fetchRemote,
+	fetchRemote:fetchRemote,
 	fetchNearby: fetchNearby
 };
