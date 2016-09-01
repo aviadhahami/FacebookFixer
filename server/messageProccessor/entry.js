@@ -52,7 +52,6 @@ const entry = function (sender, text) {
                     }
                 );
 
-				smsApi.sendText('+9720544932840',`Talking to ${firstName}`);
 
 			}, function (err) {
 				console.log('err from prome', err)
