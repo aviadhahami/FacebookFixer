@@ -8,14 +8,6 @@ const token = require('./../secrets').token;
 
 module.exports = {
 	generateTextPayload:function(id,text){
-		// var messageData = {
-		// 	recipient: {
-		// 		id: recipientId
-		// 	},
-		// 	message: {
-		// 		text: messageText
-		// 	}
-		// };
 		return{
 			recipient: {
 				id:id
