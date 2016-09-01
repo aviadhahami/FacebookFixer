@@ -14,11 +14,6 @@ module.exports = {
 					"title": "Search Settings",
 					"url": "/client/index.html"
 				},
-				// {
-				// 	"type":"web_url",
-				// 	"title":"View Website",
-				// 	"url":"http://google.com/"
-				// },
 				{
 					"type": "postback",
 					"title": "History",
