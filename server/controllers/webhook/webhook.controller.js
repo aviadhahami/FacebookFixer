@@ -17,13 +17,12 @@ function post(req, res) {
 	let messaging_events = req.body.entry[0].messaging;
 	for (let i = 0; i < messaging_events.length; i++) {
 		let event = req.body.entry[0].messaging[i];
-		
-		sendApi.getUserData(event.sender).then(function(res){
+		let sender = event.sender.id;
+		sendApi.getUserData(sender).then(function(res){
 			console.log('my res',res)
 		},function(err){
 			console.log('err from prome',err)
 		});
-		let sender = event.sender.id;
 		if (event.message && event.message.text) {
 			let text = event.message.text;
 			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
