@@ -63,7 +63,7 @@
 </div>
 
 
-<md-button class="md-raised md-primary" ng-click="post(uid)">Save</md-button>
+<md-button class="md-raised md-primary" ng-click="post()">Save</md-button>
 <md-button class="md-raised md-secondery" ng-click="cencel()">Cencel</md-button>
 
 </div>
@@ -92,24 +92,77 @@
                 $mdThemingProvider.theme('default')
 
             })
-            .controller('SearchSettingController', function ($location, $scope, $q, $http, $window) {
+            .controller('SearchSettingController', function ($location, $scope, $http, $window) {
+
+                // Scope bindings
+                $scope.diets = ['Regular', 'Vegetarian', 'Vegan'];
+
+
+                $scope.cancel = function () {
+                    $window.close();
+                };
+
+                function showPosition(position) {
+                    console.log(position);
+                    let latitude = position.coords.latitude;
+                    let longitude = position.coords.longitude;
+                    $scope.user.location = {
+                        latitude: latitude,
+                        longitude: longitude
+                    }
+                }
+
+                $scope.post = function () {
+
+                    if ($scope.user.shareLocation) {
+                        if (navigator.geolocation) {
+                            navigator.geolocation.getCurrentPosition(showPosition);
+                        }
+                    }
+
+                    // Update localStorage
+                    storage['user'] = $scope.user;
+
+
+                    let config = {
+                        method: 'POST',
+                        body: {
+                            user: $scope.user
+                        }
+                    };
+
+                    // Update server
+                    $http(`/updateUserSettings/${$scope.id}`, config).then(function (res) {
+                        if (res.data.status == 'ok') {
+                            alert('updated');
+                        }
+                    }, function (err) {
+                        alert('problem occur');
+                    });
+                };
+
+                // Set storage pointer
                 let storage = localStorage;
 
-                console.log($location.search());
-                console.log();
+                // Parse id from URL
                 const re = /id=(.*)/;
                 let m = re.exec($window.location.search);
                 let id = m[1];
                 $scope.id = id;
 
-                if (localStorage.hasOwnProperty('id')) {
-                    $scope.user.shareLocation = localStorage.id.shareLocation;
-                    $scope.user.searchRadius = localStorage.id.searchRadius;
-                    $scope.user.selectedUnits = localStorage.id.selectedUnits;
-                    $scope.user.age = localStorage.id.age;
-                    $scope.user.shareFriends = localStorage.id.shareFriends;
-                    $scope.user.diet = localStorage.id.diet;
-                } else {
+
+                // Get user data from localStorage
+                if (storage.hasOwnProperty('user') && storage.user.id === id) {
+                    $scope.user = storage.user;
+//                    $scope.user.shareLocation = localStorage.user.shareLocation;
+//                    $scope.user.searchRadius = localStorage.user.searchRadius;
+//                    $scope.user.selectedUnits = localStorage.user.selectedUnits;
+//                    $scope.user.age = localStorage.user.age;
+//                    $scope.user.shareFriends = localStorage.user.shareFriends;
+//                    $scope.user.diet = localStorage.user.diet;
+                }
+                else { // Defaults
+                    $scope.user = {};
                     $scope.user.shareLocation = false;
                     $scope.user.searchRadius = 50;
                     $scope.user.selectedUnits = 'Km';
@@ -118,33 +171,6 @@
                     $scope.user.diet = 'Regular';
                 }
 
-                $scope.diets = [Regular, Vegetarian, Vegan];
-
-                $scope.cencel = function () {
-                    $window.close();
-                };
-
-                $scope.post = function () {
-                    if ($scope.user.shareLocation) {
-                        var geocoder = new google.maps.Geocoder();
-
-                        geocoder.geocode($scope.user.location, function (results, status) {
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                $scope.user.location = results[0].address;
-                            }
-                            else {
-                                console.log($scope.user);
-                            }
-                        })
-                    }
-
-                    localStorage.id.shareLocation = $scope.user.shareLocation;
-                    localStorage.id.searchRadius = $scope.user.searchRadius;
-                    localStorage.id.selectedUnits = $scope.user.selectedUnits;
-                    localStorage.id.age = $scope.user.age;
-                    localStorage.id.shareFriends = $scope.user.shareFriends;
-                    localStorage.id.diet = $scope.user.diet;
-                }
             });
 </script>
 </body>
