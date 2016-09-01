@@ -3,7 +3,6 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-const token = require('./secrets').token;
 const app = express();
 
 
