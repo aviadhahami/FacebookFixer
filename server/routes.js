@@ -8,7 +8,7 @@ const path = require('path');
 const dir = __dirname;
 const express = require('express');
 
-module.exports = app =>{
+module.exports = app => {
 	
 	// Index route
 	app.get('/', routesMap['/'].get);
