@@ -2,7 +2,6 @@
 
 const sendApi = require('./../api/sendAPI');
 const botApi = require('./../api/botApi');
-const smsApi = require('./../api/smsAPI');
 const apiAi = require('./../apiai/apiAi');
 
 function isNew(sender) {
