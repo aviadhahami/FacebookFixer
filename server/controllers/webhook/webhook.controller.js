@@ -18,11 +18,7 @@ function post(req, res) {
 	for (let i = 0; i < messaging_events.length; i++) {
 		let event = req.body.entry[0].messaging[i];
 		let sender = event.sender.id;
-		sendApi.getUserData(sender).then(function(res){
-			console.log('my res',res)
-		},function(err){
-			console.log('err from prome',err)
-		});
+		
 		if (event.message && event.message.text) {
 			let text = event.message.text;
 			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
@@ -36,7 +32,17 @@ function sendTextMessage(sender, text) {
 	sendApi.callSendAPI(botApi.loadingIndicator(sender));
 	setTimeout(
 		function () {
-			sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
+			sendApi.getUserData(sender).then(function(res){
+				console.log('my res',res);
+				let firstName = res['first_name'] || '';
+				let text = `Hi ${firstName}! How may I help you today?`;
+				sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
+			},function(err){
+				console.log('err from prome',err)
+			});
+			
+			
+			
 		}
 		, 3000);
 }

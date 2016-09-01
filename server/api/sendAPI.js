@@ -42,12 +42,9 @@ module.exports = {
 	getUserData: function(id){
 		let deferred = q.defer();
 		request({
-			url:`https://graph.facebook.com/v2.6/${id}?fields=first_name,last_name&access_token=${token}`
+			url:`https://graph.facebook.com/v2.6/${id}?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=${token}`
 		},function (error, response, body) {
 			if (!error && response.statusCode == 200) {
-				console.log('res',response);
-				console.log('body', body);
-				
 				deferred.resolve(body);
 			} else {
 				console.error("Unable to send message.");
