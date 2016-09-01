@@ -1,7 +1,7 @@
 "use strict";
 
-const sendApi = require('./../../api/sendAPI');
-const botApi = require('./../../api/botApi');
+const sendApi = require('./../api/sendAPI');
+const botApi = require('./../api/botApi');
 
 function isNew(sender) {
 	
