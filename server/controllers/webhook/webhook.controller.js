@@ -32,10 +32,9 @@ function sendTextMessage(sender, text) {
 	sendApi.callSendAPI(botApi.loadingIndicator(sender)).then(function(res){
 		
 		sendApi.getUserData(sender).then(function(res){
-			console.log('my res',res);
-			console.log('my res nbame',res['first_name']);
+			let parsed = JSON.parse(res);
 			
-			let firstName = res['first_name'];
+			let firstName = res.first_name;
 			let text =`Hi ${firstName}, how may I help you today?`;
 			sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
 		},function(err){
