@@ -4,10 +4,10 @@ const sendApi = require('./../api/sendAPI');
 const botApi = require('./../api/botApi');
 
 function isNew(sender) {
-	
+	return true;
 }
 function isNotActive(sender) {
-	
+	return true;
 }
 
 function greetByTime(timeDiff) {
