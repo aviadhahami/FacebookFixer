@@ -2,6 +2,7 @@
 
 const sendApi = require('./../api/sendAPI');
 const botApi = require('./../api/botApi');
+const apiAi = require('./../apiai/apiAi');
 
 function isNew(sender) {
 	return true;
@@ -27,34 +28,43 @@ function greetByTime(timeDiff) {
 }
 
 const entry = function (sender, text) {
-	
+
 	if (isNew(sender) && isNotActive(sender)) {
 		// TODO: Register user to db
 		// TODO: Set user to active
-		
+
 		let messageData = {text: text};
 		sendApi.callSendAPI(botApi.loadingIndicator(sender)).then(function (res_first) {
 			sendApi.getUserData(sender).then(function (res) {
 				let parsed = JSON.parse(res);
-				
+
 				let firstName = parsed.first_name;
 				let timeDiff = parseInt(parsed.timezone);
 				let greeting = greetByTime(timeDiff) || ' Hi';
-				let text = `${greeting} ${firstName}, how may I help you?`;
-				sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
+				// let text = `${greeting} ${firstName}, how may I help you?`;
+                apiAi.request(text, sender).then(
+                    function(response) {
+                        sendApi.callSendAPI(sendApi.generateTextPayload(sender, response.result.fulfillment.speech));
+                    },
+                    function(error) {
+                        console.log(error);
+                    }
+                );
+
+
 			}, function (err) {
 				console.log('err from prome', err)
 			});
-			
+
 		}, function (err) {
-			
+
 		});
-		
-		
+
+
 	} else {
 		// TODO: Check context etcc
 	}
-	
-	
+
+
 };
 module.exports = entry;

@@ -4,14 +4,19 @@
 "use strict";
 
 const twillio_tokens = require('./../secrets').twilio;
-const twilio = require('twilio');
 
 // Find your account sid and auth token in your Twilio account Console.
-const client = twilio('TWILIO_ACCOUNT_SID', 'TWILIO_AUTH_TOKEN');
+let client = require('twilio')(twillio_tokens.SID, twillio_tokens.token);
 
-// Send the text message.
-client.sendMessage({
-	to: 'YOUR_NUMBER',
-	from: 'YOUR_TWILIO_NUMBER',
-	body: 'Hello from Twilio!'
-});
+module.exports= {
+	sendText: function (number, msg) {
+		// Send the text message.
+		client.messages.create({
+			to: number,
+			from: twillio_tokens.self_number,
+			body: msg
+		}, function (err, message) {
+			console.log('twilio', message, err);
+		});
+	}
+};
