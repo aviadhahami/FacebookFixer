@@ -19,6 +19,7 @@ module.exports = {
 		}
 	},
 	callSendAPI: function(messageData){
+		let deferred = q.defer();
 		request({
 			uri: 'https://graph.facebook.com/v2.6/me/messages',
 			qs: { access_token: token },
@@ -29,14 +30,16 @@ module.exports = {
 			if (!error && response.statusCode == 200) {
 				var recipientId = body.recipient_id;
 				var messageId = body.message_id;
-				
+				deferred.resolve(body);
 				console.log("Successfully sent generic message with id %s to recipient %s",
 					messageId, recipientId);
 			} else {
+				deferred.reject(error);
 				console.error("Unable to send message.");
 				console.error(error);
 			}
 		});
+		return deferred.promise;
 	},
 	getUserData: function(id){
 		let deferred = q.defer();
@@ -44,7 +47,6 @@ module.exports = {
 			method:'GET',
 			url:'https://graph.facebook.com/v2.6/'+id+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='+token
 		},function (error, response, body) {
-			console.log('body',body);
 			if (!error && response.statusCode == 200) {
 				deferred.resolve(body);
 			} else {

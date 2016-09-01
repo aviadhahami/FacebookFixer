@@ -2,9 +2,7 @@
  * Created by aviad on 9/1/2016.
  */
 'use strict';
-
-const botApi = require('./../../api/botApi');
-const sendApi = require('./../../api/sendAPI');
+const messageProcessor = require('./../../messageProccessor/entry');
 
 function get(req,res){
 	if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
@@ -21,26 +19,10 @@ function post(req, res) {
 		
 		if (event.message && event.message.text) {
 			let text = event.message.text;
-			sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+			messageProcessor(sender,text);
 		}
 	}
 	res.sendStatus(200)
-}
-
-function sendTextMessage(sender, text) {
-	let messageData = { text:text };
-	sendApi.callSendAPI(botApi.loadingIndicator(sender));
-	sendApi.getUserData(sender).then(function(res){
-		console.log('my res',res);
-		let firstName = res.first_name || '';
-		let text ="Hi"+firstName+"! How may I help you today?";
-		sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
-	},function(err){
-		console.log('err from prome',err)
-	});
-	
-	
-	
 }
 
 module.exports = {

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Search Settings</title>
+    <!-- Angular Material style sheet -->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+</head>
+<body ng-app="BlankApp" ng-cloak>
+<div ng-controller="BlankAppController" class="md-padding" ng-cloak>
+    <div id="fb-root"> </div>
+    <div layout="row">
+    <!--<fb:login-button scope="public_profile,email" onlogin="getUserInfo()" max-rows="1"
+                     size="large"></fb:login-button-->>
+    </div>
+    <div>
+        <h1 class="md-title">My age is</h1>
+        <div layout="row">
+            <md-input-container style="margin-right: 10px;">
+                <label>Age</label>
+                <!-- TODO: change to regular input -->
+                <md-select ng-model="user.age">
+                    <md-option ng-repeat="age in ages" value="{{age}}">{{age}}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+    <div>
+        <h1 class="md-title">Diet</h1>
+        <div layout="row">
+            <md-input-container>
+                <label>Diet</label>
+                <md-select ng-model="user.diet" md-selected-text="getSelectedDiet()">
+                    <md-optgroup label="diet">
+                        <md-option ng-value="diet" ng-repeat="diet in diets">{{diet}}</md-option>
+                    </md-optgroup>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+    <div>
+        <h1 class="md-title">Search radius</h1>
+        <div layout="row">
+            <md-input-container style="margin-right: 10px;">
+                <label>From</label>
+                <md-select ng-model="user.minAge">
+                    <md-option ng-repeat="age in ages" value="{{age}}">{{age}}</md-option>
+                </md-select>
+            </md-input-container>
+            <md-input-container>
+                <label>To</label>
+                <md-select ng-model="user.maxAge">
+                    <md-option ng-repeat="age in ages" value="{{age}}">{{age}}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+    <div>
+        <h1 class="md-title">in Distance of (km)</h1>
+        <div layout="row">
+            <md-input-container style="margin-right: 10px;">
+                <md-button class="md-raised md-primary">Km</md-button>
+                <md-button ng-disabled="true" class="md-raised md-primary">mi</md-button>   
+                <label>Please choose distance</label>
+                <md-select ng-model="user.distance">
+                    <md-option ng-repeat="distance in distances" value="{{distance}}">{{distance}}</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+    </div>
+    <md-button class="md-raised md-primary"  ng-click="post()">Send</md-button>
+    <!--<div class="form-group text-center">-->
+        <!--<div ng-class="{'error': !submitSuccess}" ng-show="statusMessage">{{statusMessage}}</div>-->
+        <!--<button type="submit" class="btn btn-info" ng-click="post()" ng-disabled="disablePost">Send</button>-->
+    <!--</div>-->
+</div>
+
+<!-- Angular Material requires Angular.js Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+<script src="https://connect.facebook.net/en_US/all.js"></script>
+
+<!-- Angular Material Library -->
+<script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<!--<script type="text/javascript" src="/js/underscore/underscore-min.js"></script>-->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDK5fP7CZgCqP9xk0lpApEjKQ3qMoqONCU&libraries=places"></script>
+
+<!-- Your application bootstrap  -->
+<script type="text/javascript">
+    /**
+     * You must include the dependency on 'ngMaterial'
+     */
+    function getUserInfo() {
+
+//                    var _self = this;
+
+        FB.api('/me','get',{fields: 'last_name,birthday,location,email,gender,age_range'}, function(res) {
+//                        $rootScope.$apply(function() {
+//                            $rootScope.user = _self.user = res;
+            console.log('logged',JSON.stringify(res))
+//                        });
+        });
+
+    }
+
+    function getParameterByName(name) {
+        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+
+    angular.module('BlankApp', ['ngMaterial', 'ngMessages'])
+            .config(function($mdThemingProvider) {
+                $mdThemingProvider.theme('default')
+
+            })
+            .controller('BlankAppController',function($scope,$q, $http,$rootScope, $window) {
+                $rootScope.user = {};
+
+                $scope.getUserInfo = function() {
+
+//                    var _self = this;
+
+                    FB.api('/me', function(res) {
+//                        $rootScope.$apply(function() {
+//                            $rootScope.user = _self.user = res;
+                            console.log('logged',res)
+//                        });
+                    });
+
+                }
+
+                $window.fbAsyncInit = function() {
+                    // Executed when the SDK is loaded
+
+                    FB.init({
+
+                        /*
+                         The app id of the web app;
+                         To register a new app visit Facebook App Dashboard
+                         ( https://developers.facebook.com/apps/ )
+                         */
+
+                        appId: '1750455508576911',
+
+                        /*
+                         Adding a Channel File improves the performance
+                         of the javascript SDK, by addressing issues
+                         with cross-domain communication in certain browsers.
+                         */
+
+                        channelUrl: 'app/channel.html',
+
+                        /*
+                         Set if you want to check the authentication status
+                         at the start up of the app
+                         */
+
+                        status: true,
+
+                        /*
+                         Enable cookies to allow the server to access
+                         the session
+                         */
+
+                        cookie: false,
+
+                        /* Parse XFBML */
+
+                        xfbml: true
+                    });
+
+//                    sAuth.watchAuthenticationStatusChange();
+
+                };
+
+                (function(d){
+                    // load the Facebook javascript SDK
+
+                    var js,
+                            id = 'facebook-jssdk',
+                            ref = d.getElementsByTagName('script')[0];
+
+                    if (d.getElementById(id)) {
+                        return;
+                    }
+
+                    js = d.createElement('script');
+                    js.id = id;
+                    js.async = true;
+                    js.src = "//connect.facebook.net/en_US/all.js";
+                    ref.parentNode.insertBefore(js, ref);
+
+                }(document));
+
+                $scope.user = {description:"",id: getParameterByName('id')}
+                $scope.city = "";
+                $http.get("/userdata/" + $scope.user.id)
+                        .then(function(response) {
+                            $scope.user.city = response.data.city;
+                            $scope.city = response.data.city;
+                            $scope.user.description = response.data.description;
+                            $scope.user.gender = response.data.gender;
+                            $scope.user.age = response.data.age;
+                            $scope.user.distance = response.data.distance;
+                            $scope.user.minAge = response.data.minAge;
+                            $scope.user.maxAge = response.data.maxAge;
+                        });
+                $scope.items = [1, 2, 3, 4, 5, 6, 7];
+                $scope.questions =  [
+                    {id: "0",aid: "a0", question:"Are you looking for",multiple: true},
+                    {id: "1",aid: "a1", question:"Age Range"},
+                    {id: "2",aid: "a2", question:"Distance in (km)"},
+                    {id: "3",aid: "a3", question:"Description"},
+                    {id: "4",aid: "a4", question:"Choose your city", multiple: true}
+                ];
+                $scope.ages = [18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60];
+                $scope.distances = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,150];
+
+                $scope.genders = ["female","male"];
+
+                $scope.questionText = function(id){
+                    return _.findWhere($scope.questions, {id: id}).question;
+                };
+                $scope.selectedItem;
+                $scope.getSelectedGender = function() {
+                    if ($scope.user.gender !== undefined) {
+                        return "You have selected: " + $scope.user.gender;
+                    } else {
+                        return "Please select a gender";
+                    }
+                }
+
+
+
+                gmapsService = new google.maps.places.AutocompleteService();
+
+                $scope.search = function(address) {
+                    var deferred = $q.defer();
+                    getResults(address).then(
+                            function (predictions) {
+                                var results = [];
+                                for (var i = 0, prediction; prediction = predictions[i]; i++) {
+                                    results.push(prediction.description);
+                                }
+                                deferred.resolve(results);
+                            }
+                    );
+                    return deferred.promise;
+                }
+
+                function getResults(address) {
+                    var deferred = $q.defer();
+                    gmapsService.getQueryPredictions({input: address}, function (data) {
+                        deferred.resolve(data);
+                    });
+                    return deferred.promise;
+                }
+
+
+
+                $scope.post = function(){
+                    if($scope.city !== $scope.user.city) {
+                        var geocoder = new google.maps.Geocoder();
+
+                        geocoder.geocode({'address': $scope.user.city}, function (results, status) {
+
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                $scope.user.lat = results[0].geometry.location.lat();
+                                $scope.user.lng = results[0].geometry.location.lng();
+                                $.ajax({
+                                    type: "POST",
+                                    url: '/settings/',
+                                    data: $scope.user,
+                                    dataType: "json",
+                                    timeout: 15000,
+                                    success: function (res) {
+                                        if (res.success) {
+                                            $scope.submitSuccess = true;
+                                            $scope.statusMessage = "Updated succesfully";
+                                        }
+                                        else {
+                                            $scope.statusMessage = "Updated succesfully";
+                                            $scope.disablePost = false;
+                                        }
+                                        $scope.$apply();
+                                    },
+                                    error: function () {
+                                        $scope.statusMessage = "Updated succesfully";
+                                        $scope.disablePost = false;
+                                        $scope.$apply();
+                                    },
+                                    complete: function () {
+                                        $scope.submitSuccess = true;
+                                        $scope.statusMessage = "Updated succesfully";
+                                        window.close()
+
+//                            $timeout(function(){
+//                                $scope.submitSuccess = false;
+//                                $scope.statusMessage = "";
+//                            }, 3000);
+                                    }
+                                });
+                            }
+                            else {
+                                console.log($scope.user);
+
+                            }
+                        })
+                    }
+                    else
+                    {
+                        $.ajax({
+                            type: "POST",
+                            url: '/settings/',
+                            data: $scope.user,
+                            dataType: "json",
+                            timeout: 15000,
+                            success: function (res) {
+                                if (res.success) {
+                                    $scope.submitSuccess = true;
+                                    $scope.statusMessage = "Updated succesfully";
+                                }
+                                else {
+                                    $scope.statusMessage = "Updated succesfully";
+                                    $scope.disablePost = false;
+                                }
+                                $scope.$apply();
+                            },
+                            error: function () {
+                                $scope.statusMessage = "Updated succesfully";
+                                $scope.disablePost = false;
+                                $scope.$apply();
+                            },
+                            complete: function () {
+                                $scope.submitSuccess = true;
+                                $scope.statusMessage = "Updated succesfully";
+                                window.close()
+
+//                            $timeout(function(){
+//                                $scope.submitSuccess = false;
+//                                $scope.statusMessage = "";
+//                            }, 3000);
+                            }
+                        });
+
+                    }
+
+                    console.log($scope.user);
+                    $scope.disablePost = true;
+
+                }
+            });
+</script>
+</body>
+
+</html>
+
+<!--
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+-->
