@@ -9,62 +9,63 @@
 </head>
 <body ng-app="SettingsApp" ng-cloak>
 <div ng-controller="SearchSettingController" class="md-padding" ng-cloak>
-    <md-icon md-svg-icon="./images/settings-icon.svg"></md-icon>
-    <h1 class="md-title"> Search settings</h1>
+    <md-content>
+        <md-icon md-svg-icon="./images/settings-icon.svg"></md-icon>
+        <h1 class="md-title"> Search settings</h1>
         <div>
             <md-checkbox ng-model="user.shareLocation" aria-label="Share location">
                 Share location
             </md-checkbox>
         </div>
         <div>
-            <div flex="10" layout layout-align="center center">
+            <div flex layout layout-align="center center">
                 <h2 class="md-title">Search radius:</h2>
-</div>
-<div flex="20" layout layout-align="center center">
-    <md-button ng-model="user.selectedUnits" class="md-raised md-primary">Km</md-button>
-    <md-button ng-model="user.selectedUnits" class="md-raised md-secondary">mi</md-button>
-    <md-input-container>
-        <label>Units</label>
-        <md-select ng-model="user.selectedUnits">
-            <md-option>Km</md-option>
-            <md-option>mi</md-option>
-        </md-select>
-    </md-input-container>
-</div>
-<div layout>
-    <md-slider flex class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1" max="150"
-               aria-label="rating">
-    </md-slider>
-</div>
-</div>
-<div>
-    <md-checkbox ng-model="user.shareFriends" aria-label="Share friends">
-        Share facebook friends list
-    </md-checkbox>
-</div>
-<div>
-    <md-input-container class="md-block" flex-gt-sm>
-        <label>Age</label>
-        <input name="age" ng-model="user.age"/>
-        <div class="hint">Required if you want to search for Pubs</div>
-    </md-input-container>
-</div>
-<div>
-    <md-input-container>
-        <label>Diet</label>
-        <md-select ng-model="user.diet">
-            <md-option><em>Regular</em></md-option>
-            <md-option ng-repeat="diet in diets" ng-value="user.diet" ng-disabled="$index === 1">
-                {{user.diet}}
-            </md-option>
-        </md-select>
-    </md-input-container>
-</div>
+            </div>
+            <div flex="20" layout layout-align="center center">
+                <md-button ng-model="user.selectedUnits" class="md-raised md-primary">Km</md-button>
+                <md-button ng-model="user.selectedUnits" class="md-raised md-secondary">mi</md-button>
+                <md-input-container>
+                    <label>Units</label>
+                    <md-select ng-model="user.selectedUnits">
+                        <md-option>Km</md-option>
+                        <md-option>mi</md-option>
+                    </md-select>
+                </md-input-container>
+            </div>
+            <div layout>
+                <md-slider flex class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1" max="150"
+                           aria-label="rating">
+                </md-slider>
+            </div>
+        </div>
+        <div>
+            <md-checkbox ng-model="user.shareFriends" aria-label="Share friends">
+                Share facebook friends list
+            </md-checkbox>
+        </div>
+        <div>
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Age</label>
+                <input name="age" ng-model="user.age"/>
+                <div class="hint">Required if you want to search for Pubs</div>
+            </md-input-container>
+        </div>
+        <div>
+            <md-input-container>
+                <label>Diet</label>
+                <md-select ng-model="user.diet">
+                    <md-option><em>Regular</em></md-option>
+                    <md-option ng-repeat="diet in diets" ng-value="user.diet" ng-disabled="$index === 1">
+                        {{user.diet}}
+                    </md-option>
+                </md-select>
+            </md-input-container>
+        </div>
 
 
-<md-button class="md-raised md-primary" ng-click="post()">Save</md-button>
-<md-button class="md-raised md-secondery" ng-click="cencel()">Cencel</md-button>
-
+        <md-button class="md-raised md-primary" ng-click="post()">Save</md-button>
+        <md-button class="md-raised md-secondery" ng-click="cencel()">Cencel</md-button>
+    </md-content>
 </div>
 
 <!-- Angular Material requires Angular.js Libraries -->
