@@ -14,9 +14,25 @@ module.exports = {
         request.on('response', function (response) {
             console.log(response);
 
-            
+            let action = response.result.action;
+            let parameters = response.result.parameters;
 
-            deferred.resolve(response);
+            if (action) {
+
+                // TODO call actionApi here!
+                let actionResponse = {};
+
+                actionResponse.then(
+                    function(actionRes) {
+                        deferred.resolve(actionRes);
+                    },
+                    function(actionErr) {
+                        deferred.reject(actionErr);
+                    }
+                )
+            } else {
+                deferred.resolve(response);
+            }
         });
 
         request.on('error', function (error) {
