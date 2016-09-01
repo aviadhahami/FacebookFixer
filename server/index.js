@@ -5,7 +5,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const sendApi = require('./api/sendAPI');
-const menuProvider = require('./persistantMenu/menu');
+const clientSettingsProvider = require('./clientSettings/clientSettings');
 
 
 
@@ -19,7 +19,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 // Send menu to sever
-sendApi.callThreadAPI(menuProvider.generateMenu());
+sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
+sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
+
 
 // Bind routes
 require('./routes')(app);
