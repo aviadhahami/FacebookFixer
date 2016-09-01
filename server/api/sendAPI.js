@@ -41,6 +41,8 @@ module.exports = {
 	},
 	getUserData: function(id){
 		let deferred = q.defer();
+		console.log('received id', id);
+		console.log('url is','https://graph.facebook.com/v2.6/'+id+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='+token)
 		request({
 			method:'GET',
 			url:'https://graph.facebook.com/v2.6/'+id+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='+token

@@ -30,6 +30,7 @@ function post(req, res) {
 function sendTextMessage(sender, text) {
 	let messageData = { text:text };
 	sendApi.callSendAPI(botApi.loadingIndicator(sender));
+	console.log('sending with id', sender);
 	sendApi.getUserData(sender).then(function(res){
 		console.log('my res',res);
 		let firstName = res['first_name'] || '';
