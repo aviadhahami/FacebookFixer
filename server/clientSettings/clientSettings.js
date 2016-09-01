@@ -12,7 +12,7 @@ module.exports = {
 				{
 					"type":"web_url",
 					"title":"Search Settings",
-					"payload":"client/index.html"
+					"url":"client/index.html"
 				},
 				{
 					"type":"postback",
