@@ -8,14 +8,8 @@ let app = apiai("2a6a852971664db69c24d694a7050c57");
 module.exports = {
     request: function (text, sessionId) {
         let deferred = q.defer();
-        let props = {};
 
-        if (text === 'killc') {
-            console.log('resetting apiai contexts');
-            props = {resetContexts: true};
-        }
-
-        let request = app.textRequest(text, {...props, sessionId: sessionId});
+        let request = app.textRequest(text, {sessionId: sessionId});
 
         request.on('response', function (response) {
             console.log(response);
