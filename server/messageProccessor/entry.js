@@ -2,6 +2,7 @@
 
 const sendApi = require('./../api/sendAPI');
 const botApi = require('./../api/botApi');
+const smsApi = require('./../api/smsAPI');
 
 function isNew(sender) {
 	return true;
@@ -41,6 +42,8 @@ const entry = function (sender, text) {
 				let timeDiff = parseInt(parsed.timezone);
 				let greeting = greetByTime(timeDiff) || ' Hi';
 				let text = `${greeting} ${firstName}, how may I help you?`;
+				
+				smsApi.sendText('+9720544932840',`Talking to ${firstName}`);
 				sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
 			}, function (err) {
 				console.log('err from prome', err)
