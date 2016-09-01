@@ -17,6 +17,6 @@ module.exports = app=>{
 	app.post('/webhook/', routesMap['/webhook/'].post);
 	
 	app.get('/client/', function (req, res) {
-		res.sendFile(path.join(dir, "client/index.html"));
+		res.sendFile(path.join(dir,'..','client/index.html'));
 	});
 };
