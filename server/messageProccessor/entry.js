@@ -28,7 +28,7 @@ function greetByTime(timeDiff) {
 }
 
 const entry = function (sender, text) {
-	sendApi.callSendAPI(menuProvider.generateMenu(sender));
+	sendApi.callThreadAPI(menuProvider.generateMenu(sender));
 	
 	
 	if (isNew(sender) && isNotActive(sender)) {
