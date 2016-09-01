@@ -52,9 +52,8 @@
             <md-input-container>
                 <label>Diet</label>
                 <md-select ng-model="user.diet">
-                    <md-option><em>Regular</em></md-option>
-                    <md-option ng-repeat="diet in diets" ng-value="user.diet" ng-disabled="$index === 1">
-                        {{user.diet}}
+                    <md-option ng-repeat="diet in diets" ng-value="diet">
+                        {{diet}}
                     </md-option>
                 </md-select>
             </md-input-container>
@@ -62,7 +61,7 @@
 
 
         <md-button class="md-raised md-primary" ng-click="post()">Save</md-button>
-        <md-button class="md-raised md-secondery" ng-click="cencel()">Cencel</md-button>
+        <md-button class="md-raised md-secondery" ng-click="cancel()">Cancel</md-button>
     </md-content>
 </div>
 
@@ -151,14 +150,7 @@
                 // Get user data from localStorage
                 if (storage.hasOwnProperty('user')) {
                     $scope.user = JSON.parse(storage.user);
-//                    $scope.user.shareLocation = localStorage.user.shareLocation;
-//                    $scope.user.searchRadius = localStorage.user.searchRadius;
-//                    $scope.user.selectedUnits = localStorage.user.selectedUnits;
-//                    $scope.user.age = localStorage.user.age;
-//                    $scope.user.shareFriends = localStorage.user.shareFriends;
-//                    $scope.user.diet = localStorage.user.diet;
-                }
-                else { // Defaults
+                } else { // Defaults
                     $scope.user = {};
                     $scope.user.shareLocation = false;
                     $scope.user.searchRadius = 50;
