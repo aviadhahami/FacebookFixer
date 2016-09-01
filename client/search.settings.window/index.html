@@ -8,13 +8,8 @@
 </head>
 <body ng-app="SettingsApp" ng-cloak>
 <div ng-controller="SearchSettingController" class="md-padding" ng-cloak>
-    <!-- <div id="fb-root"> </div>
-    <div layout="row">
-    <fb:login-button scope="public_profile,email" onlogin="getUserInfo()" max-rows="1"
-                     size="large"></fb:login-button>
-    </div> -->
     <md-icon md-svg-icon="./images/settings-icon.svg"></md-icon>
-    <h3 class="md-title"> Search settings</h3>
+    <h1 class="md-title"> Search settings</h3>
     <div>
         <md-checkbox ng-model="user.shareLocation" aria-label="Share location">
             Share location
@@ -22,7 +17,7 @@
     </div>
     <div>
         <div flex="10" layout layout-align="center center">
-            <h1 class="md-title" >Search radius: </h1>
+            <h2 class="md-title" >Search radius: </h1>
         </div>
         <div flex="20" layout layout-align="center center">
             <md-button ng-model="user.selectedUnits" class="md-raised md-primary">Km</md-button>
@@ -87,86 +82,11 @@
 
 <!-- Your application bootstrap  -->
 <script type="text/javascript">
-
-    /*function getUserInfo() {
-
-//                    var _self = this;
-
-        FB.api('/me','get',{fields: 'last_name,birthday,location,email,gender,age_range'}, function(res) {
-//                        $rootScope.$apply(function() {
-//                            $rootScope.user = _self.user = res;
-            console.log('logged',JSON.stringify(res))
-//                        });
-        });
-
-    }
-
-    function getParameterByName(name) {
-        name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-                results = regex.exec(location.search);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
-    }*/
-
-
-
-
-
-            $scope.showEdit = function (index, person, ev) {
-                $scope.index = index;
-                $mdDialog.show({
-                    controller: PersonController,
-                    templateUrl: './views/editContact.html',
-                    parent: angular.element(document.body),
-                    targetEvent: ev,
-                    preserveScope: true,
-                    clickOutsideToClose: true,
-                    locals: { person : this.person }
-                });
-            };
-
-            function PersonController($scope, $mdDialog, $rootScope, person) {
-                $scope.person = person;
-
-                $scope.cancel = function() {
-                    $mdDialog.cancel();
-                };
-
-                $scope.saveContact = function (contactInfo) {
-                    $rootScope.$broadcast("contactToSave",
-                        {
-                            firstName: contactInfo.newFirstName,lastName: contactInfo.newLastName,company: contactInfo.newCompany,phone: contactInfo.newPhone,email: contactInfo.newEmail
-                        }
-                    );
-                    /*exit dialog*/
-                    $mdDialog.cancel();
-                };
-
-                $scope.updateContact = function () {
-                    $mdDialog.show(
-                        $mdDialog.alert()
-                            .title('Contact has been updated!')
-                            .ok('OK')
-                    );
-                    $mdDialog.cancel();
-                };
-            }
-
-
-
-
-
-
-
-
-
-
     angular.module('SettingsApp', ['ngMaterial'])
             .config(function($mdThemingProvider) {
                 $mdThemingProvider.theme('default')
 
             })
-
             .controller('SearchSettingController',function($scope,$q, $http,$rootScope, $window) {
                 $scope.id = $location.search().id;
                 if (localstorage.hasOwnProperty('id')) {
@@ -187,69 +107,34 @@
                  
                 $scope.diets = [Regular, Vegetarian, Vegan];
 
+                $scope.cencel = function() {
+                    $window.close();
+                }
+
                 $scope.post = function(){
                         if($scope.user.shareLocation) {
                             var geocoder = new google.maps.Geocoder();
 
                             geocoder.geocode($scope.user.location, function (results, status) {
                                 if (status == google.maps.GeocoderStatus.OK) {
-                                    $scope.user.location = results[0].geometry.location.lat();
+                                    $scope.user.location = results[0].address;
                                 }
                                 else {
                                     console.log($scope.user);
                                 }
                             })
                         }
-                        else
-                        {
-                            $.ajax({
-                                type: "POST",
-                                url: '/settings/',
-                                data: $scope.user,
-                                dataType: "json",
-                                timeout: 15000,
-                                success: function (res) {
-                                    if (res.success) {
-                                        $scope.submitSuccess = true;
-                                        $scope.statusMessage = "Updated succesfully";
-                                    }
-                                    else {
-                                        $scope.statusMessage = "Updated succesfully";
-                                        $scope.disablePost = false;
-                                    }
-                                    $scope.$apply();
-                                },
-                                error: function () {
-                                    $scope.statusMessage = "Updated succesfully";
-                                    $scope.disablePost = false;
-                                    $scope.$apply();
-                                },
-                                complete: function () {
-                                    $scope.submitSuccess = true;
-                                    $scope.statusMessage = "Updated succesfully";
-                                    window.close()
 
-//                            $timeout(function(){
-//                                $scope.submitSuccess = false;
-//                                $scope.statusMessage = "";
-//                            }, 3000);
-                                }
-                            });
-
-                        }
-
-                        console.log($scope.user);
-                        $scope.disablePost = true;
-
-                    }
-                });
+                        localstorage.id.shareLocation = $scope.user.shareLocation;
+                        localstorage.id.searchRadius = $scope.user.searchRadius;
+                        localstorage.id.selectedUnits = $scope.user.selectedUnits;
+                        localstorage.id.age = $scope.user.age;
+                        localstorage.id.shareFriends = $scope.user.shareFriends;
+                        localstorage.id.diet = $scope.user.diet;
+                }
+            });
     </script>
 </script>
 </body>
 
 </html>
-
-<!--
-Copyright 2016 Google Inc. All Rights Reserved.
-Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
--->
