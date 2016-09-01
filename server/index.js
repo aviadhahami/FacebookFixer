@@ -18,10 +18,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 // Process application/json
 app.use(bodyParser.json());
 
-// Send menu to sever
-sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
-sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
-
 
 // Bind routes
 require('./routes')(app);

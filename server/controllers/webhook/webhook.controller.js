@@ -3,6 +3,8 @@
  */
 'use strict';
 const messageProcessor = require('./../../messageProccessor/entry');
+const sendApi = require("../../api/sendAPI");
+const clientSettingsProvider =require("../../clientSettings/clientSettings");
 
 function get(req,res){
 	if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
@@ -12,6 +14,11 @@ function get(req,res){
 }
 
 function post(req, res) {
+
+// Send menu to sever
+	sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
+	sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
+	
 	let messaging_events = req.body.entry[0].messaging;
 	for (let i = 0; i < messaging_events.length; i++) {
 		let event = req.body.entry[0].messaging[i];
