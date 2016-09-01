@@ -16,6 +16,8 @@ function get(req,res){
 function post(req, res) {
 	let messaging_events = req.body.entry[0].messaging;
 	for (let i = 0; i < messaging_events.length; i++) {
+		console.log('event', event);
+		console.log('sender',event.sender);
 		let event = req.body.entry[0].messaging[i];
 		let sender = event.sender.id;
 		if (event.message && event.message.text) {
@@ -34,7 +36,6 @@ function sendTextMessage(sender, text) {
 			sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
 		}
 		, 3000);
-	
 }
 
 module.exports = {
