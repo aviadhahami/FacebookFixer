@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Search Settings</title>
     <!-- Angular Material style sheet -->
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 </head>
 <body ng-app="SettingsApp" ng-cloak>
 <div ng-controller="SearchSettingController" class="md-padding" ng-cloak>
@@ -17,7 +18,8 @@
         </div>
         <div>
             <div flex="10" layout layout-align="center center">
-                <h2 class="md-title" >Search radius: </h1>
+                <h2 class="md-title">Search radius:
+    </h1>
 </div>
 <div flex="20" layout layout-align="center center">
     <md-button ng-model="user.selectedUnits" class="md-raised md-primary">Km</md-button>
@@ -31,7 +33,8 @@
     </md-input-container>
 </div>
 <div layout>
-    <md-slider flex class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1" max="150" aria-label="rating">
+    <md-slider flex class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1" max="150"
+               aria-label="rating">
     </md-slider>
 </div>
 </div>
@@ -60,8 +63,8 @@
 </div>
 
 
-<md-button class="md-raised md-primary"  ng-click="post(uid)">Save</md-button>
-<md-button class="md-raised md-secondery"  ng-click="cencel()">Cencel</md-button>
+<md-button class="md-raised md-primary" ng-click="post(uid)">Save</md-button>
+<md-button class="md-raised md-secondery" ng-click="cencel()">Cencel</md-button>
 
 </div>
 
@@ -75,27 +78,37 @@
 
 <!-- Angular Material Library -->
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <!-- Google location library -->
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIFZ0tjCUja5jsW9UYJ2DxyRnziLD2wtk&libraries=places"></script>
+<script type="text/javascript"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIFZ0tjCUja5jsW9UYJ2DxyRnziLD2wtk&libraries=places"></script>
 
 
 <!-- Your application bootstrap  -->
 <script type="text/javascript">
     angular.module('SettingsApp', ['ngMaterial'])
-            .config(function($mdThemingProvider) {
+            .config(function ($mdThemingProvider) {
                 $mdThemingProvider.theme('default')
 
             })
-            .controller('SearchSettingController',function($scope,$q, $http,$rootScope, $window) {
-                $scope.id = $location.search().id;
-                if (localstorage.hasOwnProperty('id')) {
-                    $scope.user.shareLocation = localstorage.id.shareLocation;
-                    $scope.user.searchRadius = localstorage.id.searchRadius;
-                    $scope.user.selectedUnits = localstorage.id.selectedUnits;
-                    $scope.user.age = localstorage.id.age;
-                    $scope.user.shareFriends = localstorage.id.shareFriends;
-                    $scope.user.diet = localstorage.id.diet;
+            .controller('SearchSettingController', function ($location, $scope, $q, $http, $window) {
+                let storage = localStorage;
+
+                console.log($location.search());
+                console.log();
+                const re = /id=(.*)/;
+                let m = re.exec($window.location.search);
+                let id = m[1];
+                $scope.id = id;
+
+                if (localStorage.hasOwnProperty('id')) {
+                    $scope.user.shareLocation = localStorage.id.shareLocation;
+                    $scope.user.searchRadius = localStorage.id.searchRadius;
+                    $scope.user.selectedUnits = localStorage.id.selectedUnits;
+                    $scope.user.age = localStorage.id.age;
+                    $scope.user.shareFriends = localStorage.id.shareFriends;
+                    $scope.user.diet = localStorage.id.diet;
                 } else {
                     $scope.user.shareLocation = false;
                     $scope.user.searchRadius = 50;
@@ -107,12 +120,12 @@
 
                 $scope.diets = [Regular, Vegetarian, Vegan];
 
-                $scope.cencel = function() {
+                $scope.cencel = function () {
                     $window.close();
                 };
 
-                $scope.post = function(){
-                    if($scope.user.shareLocation) {
+                $scope.post = function () {
+                    if ($scope.user.shareLocation) {
                         var geocoder = new google.maps.Geocoder();
 
                         geocoder.geocode($scope.user.location, function (results, status) {
@@ -125,12 +138,12 @@
                         })
                     }
 
-                    localstorage.id.shareLocation = $scope.user.shareLocation;
-                    localstorage.id.searchRadius = $scope.user.searchRadius;
-                    localstorage.id.selectedUnits = $scope.user.selectedUnits;
-                    localstorage.id.age = $scope.user.age;
-                    localstorage.id.shareFriends = $scope.user.shareFriends;
-                    localstorage.id.diet = $scope.user.diet;
+                    localStorage.id.shareLocation = $scope.user.shareLocation;
+                    localStorage.id.searchRadius = $scope.user.searchRadius;
+                    localStorage.id.selectedUnits = $scope.user.selectedUnits;
+                    localStorage.id.age = $scope.user.age;
+                    localStorage.id.shareFriends = $scope.user.shareFriends;
+                    localStorage.id.diet = $scope.user.diet;
                 }
             });
 </script>
