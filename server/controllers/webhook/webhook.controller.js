@@ -18,9 +18,11 @@ function post(req, res) {
 	for (let i = 0; i < messaging_events.length; i++) {
 		let event = req.body.entry[0].messaging[i];
 		
-		console.log('event', event);
-		console.log('sender',event.sender);
-		
+		sendApi.getUserData(event.sender).then(function(res){
+			console.log('my res',res)
+		},function(err){
+			console.log('err from prome',err)
+		});
 		let sender = event.sender.id;
 		if (event.message && event.message.text) {
 			let text = event.message.text;
