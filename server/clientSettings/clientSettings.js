@@ -37,7 +37,7 @@ module.exports = {
 			"setting_type": "greeting",
 			"greeting": {
 				"text": `Welcome to Fixer!
-				It is recommended to check the available settings`
+				It is recommended to check the available settings :D`
 			}
 		}
 	}
