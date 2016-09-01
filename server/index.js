@@ -4,6 +4,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const sendApi = require('./api/sendAPI');
+const clientSettingsProvider = require('./clientSettings/clientSettings');
+
 
 
 let PORT = 5000;
@@ -14,6 +17,10 @@ app.use(bodyParser.urlencoded({extended: false}));
 
 // Process application/json
 app.use(bodyParser.json());
+
+// Send menu to sever
+sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
+sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
 
 
 // Bind routes

@@ -16,7 +16,7 @@ module.exports={
 				"adress": "Yigal Alon 51"
 			},
 			"rating": "3.3",
-			"opening hours": {
+			"opening_hours": {
 				"sunday": "11:00-00:00",
 				"monday": "11:00-00:00",
 				"tuesday": "11:00-00:00",
@@ -25,7 +25,7 @@ module.exports={
 				"friday": "11:00-00:00",
 				"saturday": "11:00-00:00"
 			},
-			"phone number": "1700506070",
+			"phone_number": "1700506070",
 			"service": {
 				"type": "restaurant",
 				"sub-type": "italian"
@@ -51,7 +51,7 @@ module.exports={
 				"adress": "Karlibach 20"
 			},
 			"rating": "4",
-			"opening hours": {
+			"opening_hours": {
 				"sunday": "17:00-01:00",
 				"monday": "17:00-01:00",
 				"tuesday": "17:00-01:00",
@@ -60,7 +60,7 @@ module.exports={
 				"friday": "12:00-02:00",
 				"saturday": "12:00-01:00"
 			},
-			"phone number": "0539443290",
+			"phone_number": "0539443290",
 			"service": {
 				"type": "restaurant",
 				"sub-type": "italian"
@@ -86,7 +86,7 @@ module.exports={
 				"adress": "Ibn Gabirol 24"
 			},
 			"rating": "1",
-			"opening hours": {
+			"opening_hours": {
 				"sunday": "09:00-03:00",
 				"monday": "09:00-03:00",
 				"tuesday": "09:00-03:00",
@@ -95,7 +95,7 @@ module.exports={
 				"friday": "09:00-03:00",
 				"saturday": "09:00-03:00"
 			},
-			"phone number": "0539366008",
+			"phone_number": "0539366008",
 			"service": {
 				"type": "restaurant",
 				"sub-type": "italian"
@@ -115,7 +115,7 @@ module.exports={
 				"adress": "Shoham 11"
 			},
 			"rating": "5",
-			"opening hours": {
+			"opening_hours": {
 				"sunday": "09:00-18:00",
 				"monday": "09:00-18:00",
 				"tuesday": "09:00-18:00",
@@ -124,7 +124,7 @@ module.exports={
 				"friday": "09:00-12:00",
 				"saturday": "-"
 			},
-			"phone number": "0525366008",
+			"phone_number": "0525366008",
 			"service": {
 				"type": "technician",
 				"sub-type": "airconditioning"
@@ -147,7 +147,7 @@ module.exports={
 				"adress": "Hasharon 15"
 			},
 			"rating": "3.7",
-			"opening hours": {
+			"opening_hours": {
 				"sunday": "09:00-18:00",
 				"monday": "09:00-18:00",
 				"tuesday": "09:00-18:00",
@@ -156,7 +156,7 @@ module.exports={
 				"friday": "09:00-12:00",
 				"saturday": "-"
 			},
-			"phone number": "0544678890",
+			"phone_number": "0544678890",
 			"service": {
 				"type": "technician",
 				"sub-type": "airconditioning"
@@ -179,7 +179,7 @@ module.exports={
 				"adress": "Ibn Gabirol 15"
 			},
 			"rating": "4.7",
-			"opening hours": {
+			"opening_hours": {
 				"sunday": "09:00-18:00",
 				"monday": "09:00-18:00",
 				"tuesday": "09:00-18:00",
@@ -188,7 +188,7 @@ module.exports={
 				"friday": "09:00-12:00",
 				"saturday": "-"
 			},
-			"phone number": "0548678890",
+			"phone_number": "0548678890",
 			"service": {
 				"type": "technician",
 				"sub-type": "airconditioning"
