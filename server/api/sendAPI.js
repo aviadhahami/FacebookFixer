@@ -31,8 +31,7 @@ module.exports = {
 				var messageId = body.message_id;
 				deferred.resolve(body);
 			} else {
-				deferred.reject(error,body);
-				console.error(error);
+				deferred.reject(error,response, body);
 			}
 		});
 		return deferred.promise;
