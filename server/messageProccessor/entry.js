@@ -50,7 +50,7 @@ const entry = function (sender, text) {
                     function(error) {
                         console.log(error);
                     }
-                )
+                );
 
 				smsApi.sendText('+9720544932840',`Talking to ${firstName}`);
 
