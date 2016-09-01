@@ -3,15 +3,10 @@
  */
 
 module.exports = {
-	sendLoadingIndicator: function (id, token) {
+	loadingIndicator: function (id) {
 		return {
-			url: 'https://graph.facebook.com/v2.6/me/messages',
-			method: 'POST',
-			qs: {access_token: token},
-			json: {
-				recipient: {id: id},
-				sender_action: "typing_on"
-			}
+			recipient: {id: id},
+			sender_action: "typing_on"
 		}
 	}
 };
