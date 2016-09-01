@@ -145,7 +145,7 @@
                 // Parse id from URL
                 const re = /id=(.*)/;
                 let m = re.exec($window.location.search);
-                let id = m[1] || '';
+                let id = m.length>0? m[1] : '';
                 $scope.id = id;
 
 
