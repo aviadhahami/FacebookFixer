@@ -19,9 +19,27 @@ https.get('https://maps.googleapis.com/maps/api/place/textsearch/json?' //locati
       var places = JSON.parse(body);
       var locations = places.results;
       var randLoc = locations[Math.floor(Math.random() * locations.length)];
+      var resArr = [];
 
-      console.log(places.results);
+      for(var i=0; i<places.results.length; i++){
+      	resArr.push(parsePlace(places.results[i]));
+      }
+      console.log(resArr);
+
     });
 }).on('error', function(e) {
   console.log(`Got error: ${e.message}`);
 });
+
+function parsePlace(place){
+  var obj=new Object;
+  obj.name=place.name;
+  obj.website=place.website;
+  obj.adress=place.formatted_address;
+  obj.rating=place.rating;
+  if(typeof obj.rating==="undefined"){obj.rating="Not Rated Yet";}
+  obj.opening_hours=place.opening_hours;
+  obj.phone_number=place.international_phone_number;
+  obj.types=place.types;
+  return obj;
+}
