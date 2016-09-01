@@ -28,7 +28,7 @@ function greetByTime(timeDiff) {
 }
 
 const entry = function (sender, text) {
-	menuController.pushMenu(sender);
+	menuProvider.pushMenu(sender);
 	
 	if (isNew(sender) && isNotActive(sender)) {
 		// TODO: Register user to db
