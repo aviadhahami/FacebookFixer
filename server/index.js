@@ -24,10 +24,6 @@ sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
 sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
 
 
-// Serve client
-app.use(express.static(__dirname,'..','client'));
-
-
 // Bind routes
 require('./routes')(app);
 
