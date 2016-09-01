@@ -5,6 +5,8 @@
 const request = require('request');
 const token = require('./../../secrets').token;
 
+const botApi = require('./../../api/botApi');
+
 
 function get(req,res){
 	if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {
@@ -28,6 +30,9 @@ function post(req, res) {
 
 function sendTextMessage(sender, text) {
 	let messageData = { text:text };
+	request(botApi.sendLoadingIndicator(sender,token), function(err){
+		console.log('err',err);
+	});
 	request({
 		url: 'https://graph.facebook.com/v2.6/me/messages',
 		qs: {access_token:token},
