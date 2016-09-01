@@ -2,7 +2,6 @@
  * Created by aviad on 9/1/2016.
  */
 'use strict';
-const request = require('request');
 
 const botApi = require('./../../api/botApi');
 const sendApi = require('./../../api/sendAPI');
@@ -31,10 +30,10 @@ function sendTextMessage(sender, text) {
 	let messageData = { text:text };
 	sendApi.callSendAPI(botApi.loadingIndicator(sender));
 	setTimeout(
-		function(){
-			sendApi.callSendAPI(sendApi.generateTextPayload(sender,text));
+		function () {
+			sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
 		}
-		,3000)
+		, 3000);
 	
 }
 
