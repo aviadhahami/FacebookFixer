@@ -34,7 +34,7 @@ function sendTextMessage(sender, text) {
 		sendApi.getUserData(sender).then(function(res){
 			let parsed = JSON.parse(res);
 			
-			let firstName = res.first_name;
+			let firstName = parsed.first_name;
 			let text =`Hi ${firstName}, how may I help you today?`;
 			sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
 		},function(err){
