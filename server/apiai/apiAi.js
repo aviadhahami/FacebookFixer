@@ -14,8 +14,7 @@ module.exports = {
         request.on('response', function (response) {
             console.log(response);
 
-            console.log("\nContext0:\n");
-            console.log(response.result.contexts[0]);
+            
 
             deferred.resolve(response);
         });
