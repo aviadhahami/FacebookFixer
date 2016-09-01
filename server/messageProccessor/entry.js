@@ -28,16 +28,6 @@ function greetByTime(timeDiff) {
 }
 
 const entry = function (sender, text) {
-	sendApi.callThreadAPI(menuProvider.generateMenu(sender)).then(
-		function(res){
-			console.log('res from menu',res);
-		},
-		function(err){
-			console.log('err from menu',err);
-		}
-	);
-	
-	
 	if (isNew(sender) && isNotActive(sender)) {
 		// TODO: Register user to db
 		// TODO: Set user to active

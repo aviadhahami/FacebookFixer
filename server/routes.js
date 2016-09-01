@@ -11,6 +11,6 @@ module.exports = app=>{
 	app.get('/', routesMap['/'].get);
 	
 	// for Facebook verification
-	app .get('/webhook/', routesMap['/webhook/'].get);
+	app.get('/webhook/', routesMap['/webhook/'].get);
 	app.post('/webhook/', routesMap['/webhook/'].post);
 };
