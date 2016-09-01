@@ -32,7 +32,6 @@ module.exports = {
 			if (!error && response.statusCode == 200) {
 				deferred.resolve(body);
 			} else {
-				console.log('REJETED!');
 				deferred.reject(error,response, body);
 			}
 		});
