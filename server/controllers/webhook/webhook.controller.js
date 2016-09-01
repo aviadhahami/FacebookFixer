@@ -33,8 +33,9 @@ function sendTextMessage(sender, text) {
 	sendApi.getUserData(sender).then(function(res){
 		console.log('my res',res);
 		let firstName = res.first_name || '';
-		let text ="Hi"+firstName+"! How may I help you today?";
-		sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
+		let text =`Hi ${firstName}, how may I help you today?`;
+		console.log(sendApi.generateTextPayload(sender, text));
+		// sendApi.callSendAPI();
 	},function(err){
 		console.log('err from prome',err)
 	});
