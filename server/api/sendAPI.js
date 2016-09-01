@@ -25,14 +25,13 @@ module.exports = {
 			qs: { access_token: token },
 			method: 'POST',
 			json: payload
-			
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				var recipientId = body.recipient_id;
 				var messageId = body.message_id;
 				deferred.resolve(body);
 			} else {
-				deferred.reject(error);
+				deferred.reject(error,body);
 				console.error(error);
 			}
 		});

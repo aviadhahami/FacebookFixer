@@ -18,8 +18,8 @@ function post(req, res) {
 // Send menu to sever
 	sendApi.callThreadAPI(clientSettingsProvider.generateMenu()).then(function(res){
 		console.log('res from menu', res);
-	},function(err){
-		console.log('err from menu', err);
+	},function(err,body){
+		console.log('err from menu', err,body);
 	});
 	sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
 	
