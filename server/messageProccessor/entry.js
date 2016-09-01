@@ -2,7 +2,6 @@
 
 const sendApi = require('./../api/sendAPI');
 const botApi = require('./../api/botApi');
-const menuProvider = require('././menu');
 
 function isNew(sender) {
 	return true;
