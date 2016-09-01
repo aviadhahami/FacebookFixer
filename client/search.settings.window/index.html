@@ -10,58 +10,58 @@
 <div ng-controller="SearchSettingController" class="md-padding" ng-cloak>
     <md-icon md-svg-icon="./images/settings-icon.svg"></md-icon>
     <h1 class="md-title"> Search settings</h3>
-    <div>
-        <md-checkbox ng-model="user.shareLocation" aria-label="Share location">
-            Share location
-        </md-checkbox>
-    </div>
-    <div>
-        <div flex="10" layout layout-align="center center">
-            <h2 class="md-title" >Search radius: </h1>
+        <div>
+            <md-checkbox ng-model="user.shareLocation" aria-label="Share location">
+                Share location
+            </md-checkbox>
         </div>
-        <div flex="20" layout layout-align="center center">
-            <md-button ng-model="user.selectedUnits" class="md-raised md-primary">Km</md-button>
-            <md-button ng-model="user.selectedUnits" class="md-raised md-secondary">mi</md-button>
-            <md-input-container>
-            <label>Units</label>
-            <md-select ng-model="user.selectedUnits">
-                <md-option>Km</md-option>
-                <md-option>mi</md-option>
-            </md-select>
-        </md-input-container>
-        </div>
-        <div layout>
-            <md-slider flex class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1" max="150" aria-label="rating">
-            </md-slider>
-        </div>
-    </div>
-    <div>
-        <md-checkbox ng-model="user.shareFriends" aria-label="Share friends">
-            Share facebook friends list
-        </md-checkbox>
-    </div>
-    <div>
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Age</label>
-            <input name="age" ng-model="user.age"/>
-            <div class="hint">Required if you want to search for Pubs</div>
-        </md-input-container>
-    </div>
-    <div>
-        <md-input-container>
-            <label>Diet</label>
-            <md-select ng-model="user.diet">
-                <md-option><em>Regular</em></md-option>
-                <md-option ng-repeat="diet in diets" ng-value="user.diet" ng-disabled="$index === 1">
-                    {{user.diet}}
-                </md-option>
-            </md-select>
-        </md-input-container>
-    </div>
+        <div>
+            <div flex="10" layout layout-align="center center">
+                <h2 class="md-title" >Search radius: </h1>
+</div>
+<div flex="20" layout layout-align="center center">
+    <md-button ng-model="user.selectedUnits" class="md-raised md-primary">Km</md-button>
+    <md-button ng-model="user.selectedUnits" class="md-raised md-secondary">mi</md-button>
+    <md-input-container>
+        <label>Units</label>
+        <md-select ng-model="user.selectedUnits">
+            <md-option>Km</md-option>
+            <md-option>mi</md-option>
+        </md-select>
+    </md-input-container>
+</div>
+<div layout>
+    <md-slider flex class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1" max="150" aria-label="rating">
+    </md-slider>
+</div>
+</div>
+<div>
+    <md-checkbox ng-model="user.shareFriends" aria-label="Share friends">
+        Share facebook friends list
+    </md-checkbox>
+</div>
+<div>
+    <md-input-container class="md-block" flex-gt-sm>
+        <label>Age</label>
+        <input name="age" ng-model="user.age"/>
+        <div class="hint">Required if you want to search for Pubs</div>
+    </md-input-container>
+</div>
+<div>
+    <md-input-container>
+        <label>Diet</label>
+        <md-select ng-model="user.diet">
+            <md-option><em>Regular</em></md-option>
+            <md-option ng-repeat="diet in diets" ng-value="user.diet" ng-disabled="$index === 1">
+                {{user.diet}}
+            </md-option>
+        </md-select>
+    </md-input-container>
+</div>
 
 
-    <md-button class="md-raised md-primary"  ng-click="post(uid)">Save</md-button>
-    <md-button class="md-raised md-secondery"  ng-click="cencel()">Cencel</md-button>
+<md-button class="md-raised md-primary"  ng-click="post(uid)">Save</md-button>
+<md-button class="md-raised md-secondery"  ng-click="cencel()">Cencel</md-button>
 
 </div>
 
@@ -104,36 +104,35 @@
                     $scope.user.shareFriends = false;
                     $scope.user.diet = 'Regular';
                 }
-                 
+
                 $scope.diets = [Regular, Vegetarian, Vegan];
 
                 $scope.cencel = function() {
                     $window.close();
-                }
+                };
 
                 $scope.post = function(){
-                        if($scope.user.shareLocation) {
-                            var geocoder = new google.maps.Geocoder();
+                    if($scope.user.shareLocation) {
+                        var geocoder = new google.maps.Geocoder();
 
-                            geocoder.geocode($scope.user.location, function (results, status) {
-                                if (status == google.maps.GeocoderStatus.OK) {
-                                    $scope.user.location = results[0].address;
-                                }
-                                else {
-                                    console.log($scope.user);
-                                }
-                            })
-                        }
+                        geocoder.geocode($scope.user.location, function (results, status) {
+                            if (status == google.maps.GeocoderStatus.OK) {
+                                $scope.user.location = results[0].address;
+                            }
+                            else {
+                                console.log($scope.user);
+                            }
+                        })
+                    }
 
-                        localstorage.id.shareLocation = $scope.user.shareLocation;
-                        localstorage.id.searchRadius = $scope.user.searchRadius;
-                        localstorage.id.selectedUnits = $scope.user.selectedUnits;
-                        localstorage.id.age = $scope.user.age;
-                        localstorage.id.shareFriends = $scope.user.shareFriends;
-                        localstorage.id.diet = $scope.user.diet;
+                    localstorage.id.shareLocation = $scope.user.shareLocation;
+                    localstorage.id.searchRadius = $scope.user.searchRadius;
+                    localstorage.id.selectedUnits = $scope.user.selectedUnits;
+                    localstorage.id.age = $scope.user.age;
+                    localstorage.id.shareFriends = $scope.user.shareFriends;
+                    localstorage.id.diet = $scope.user.diet;
                 }
             });
-    </script>
 </script>
 </body>
 
