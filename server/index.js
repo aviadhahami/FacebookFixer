@@ -23,6 +23,7 @@ app.use(bodyParser.json());
 sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
 sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
 
+app.use(express.static(path.join(__dirname,'..','client')));
 
 // Bind routes
 require('./routes')(app);
