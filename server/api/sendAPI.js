@@ -23,6 +23,9 @@ module.exports = {
 		request({
 			uri: 'https://graph.facebook.com/v2.6/me/thread_settings',
 			qs: { access_token: token },
+			headers:{
+				'Content-Type': 'application/json'
+			},
 			method: 'POST',
 			json: payload
 		}, function (error, response, body) {
