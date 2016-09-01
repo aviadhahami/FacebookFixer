@@ -47,7 +47,6 @@ module.exports = {
 			method:'GET',
 			url:'https://graph.facebook.com/v2.6/'+id+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='+token
 		},function (error, response, body) {
-			console.log('body',body);
 			if (!error && response.statusCode == 200) {
 				deferred.resolve(body);
 			} else {
