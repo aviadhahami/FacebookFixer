@@ -2,9 +2,9 @@
   "name": "facebookfixer",
   "version": "1.0.0",
   "description": "",
-  "main": "Server/index.js",
+  "main": "server/index.js",
   "scripts": {
-    "run": "node Server/index.js",
+    "run": "node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
