@@ -10,18 +10,20 @@
 <body ng-app="SettingsApp" ng-cloak>
 <div ng-controller="SearchSettingController" class="md-padding" ng-cloak>
     <md-content>
-        <md-icon md-svg-icon="./images/settings-icon.svg"></md-icon>
-        <h1 class="md-title"> Search settings</h1>
+        <div layout="row">
+            <md-icon md-svg-icon="./images/settings-icon.svg"></md-icon>
+            <h1 class="md-title"> Search settings</h1>
+        </div>
         <div>
             <md-checkbox ng-model="user.shareLocation" aria-label="Share location">
                 Share location
             </md-checkbox>
         </div>
-        <div>
-            <div flex layout layout-align="center center">
+        <div layout="row">
+            <div flex="20">
                 <h2 class="md-title">Search radius:</h2>
             </div>
-            <div flex layout layout-align="center center">
+            <div flex="10">
                 <md-input-container>
                     <label>Units</label>
                     <md-select ng-model="user.selectedUnits">
@@ -30,11 +32,12 @@
                     </md-select>
                 </md-input-container>
             </div>
-            <div layout>
-                <md-slider flex class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1" max="150"
+            <div flex="40" >
+                <md-slider class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1" max="150"
                            aria-label="rating">
                 </md-slider>
             </div>
+            <div flex></div>
         </div>
         <div>
             <md-checkbox ng-model="user.shareFriends" aria-label="Share friends">
