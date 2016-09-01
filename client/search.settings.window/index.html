@@ -21,9 +21,7 @@
             <div flex layout layout-align="center center">
                 <h2 class="md-title">Search radius:</h2>
             </div>
-            <div flex="20" layout layout-align="center center">
-                <md-button ng-model="user.selectedUnits" class="md-raised md-primary">Km</md-button>
-                <md-button ng-model="user.selectedUnits" class="md-raised md-secondary">mi</md-button>
+            <div flex layout layout-align="center center">
                 <md-input-container>
                     <label>Units</label>
                     <md-select ng-model="user.selectedUnits">
@@ -103,7 +101,6 @@
                 };
 
                 function showPosition(position) {
-                    console.log(position);
                     let latitude = position.coords.latitude;
                     let longitude = position.coords.longitude;
                     $scope.user.location = {
@@ -121,7 +118,7 @@
                     }
 
                     // Update localStorage
-                    storage['user'] = $scope.user;
+                    storage['user'] = JSON.stringify($scope.user);
 
 
                     let config = {
@@ -152,8 +149,8 @@
 
 
                 // Get user data from localStorage
-                if (storage.hasOwnProperty('user') && storage.user.id === id) {
-                    $scope.user = storage.user;
+                if (storage.hasOwnProperty('user')) {
+                    $scope.user = JSON.parse(storage.user);
 //                    $scope.user.shareLocation = localStorage.user.shareLocation;
 //                    $scope.user.searchRadius = localStorage.user.searchRadius;
 //                    $scope.user.selectedUnits = localStorage.user.selectedUnits;
