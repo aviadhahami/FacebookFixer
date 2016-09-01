@@ -147,8 +147,9 @@
                 let m = re.exec($window.location.search);
                 if (!!m && m.length > 0) {
                     $scope.id = m[1];
+                }else{
+                    $scope.id = '';
                 }
-
 
                 // Get user data from localStorage
                 if (storage.hasOwnProperty('user')) {
