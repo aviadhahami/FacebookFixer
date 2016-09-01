@@ -32,7 +32,7 @@
                     </md-select>
                 </md-input-container>
             </div>
-            <div flex="40" >
+            <div flex="40">
                 <md-slider class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1" max="150"
                            aria-label="rating">
                 </md-slider>
@@ -145,8 +145,9 @@
                 // Parse id from URL
                 const re = /id=(.*)/;
                 let m = re.exec($window.location.search);
-                let id = m.length>0? m[1] : '';
-                $scope.id = id;
+                if (!!m && m.length > 0) {
+                    $scope.id = m[1];
+                }
 
 
                 // Get user data from localStorage
