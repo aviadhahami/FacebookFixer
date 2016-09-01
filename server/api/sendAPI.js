@@ -23,17 +23,16 @@ module.exports = {
 		request({
 			uri: 'https://graph.facebook.com/v2.6/me/thread_settings',
 			qs: { access_token: token },
+			headers:{
+				'Content-Type': 'application/json'
+			},
 			method: 'POST',
 			json: payload
-			
 		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
-				var recipientId = body.recipient_id;
-				var messageId = body.message_id;
 				deferred.resolve(body);
 			} else {
-				deferred.reject(error);
-				console.error(error);
+				deferred.reject(error,response, body);
 			}
 		});
 		return deferred.promise;

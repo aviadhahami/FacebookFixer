@@ -18,9 +18,12 @@ app.use(bodyParser.urlencoded({extended: false}));
 // Process application/json
 app.use(bodyParser.json());
 
-// Send menu to sever
+
+// Boostrap
 sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
 sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
+
+
 
 
 // Bind routes
