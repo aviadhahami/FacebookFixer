@@ -15,6 +15,11 @@ module.exports = {
 					"url": "/client/index.html"
 				},
 				{
+					"type":"web_url",
+					"title":"View Website",
+					"url":"http://google.com/"
+				},
+				{
 					"type": "postback",
 					"title": "History",
 					"payload": "History_Payload"
