@@ -6,8 +6,8 @@
     <!-- Angular Material style sheet -->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 </head>
-<body ng-app="BlankApp" ng-cloak>
-<div ng-controller="BlankAppController" class="md-padding" ng-cloak>
+<body ng-app="SettingsApp" ng-cloak>
+<div ng-controller="SearchSettingController" class="md-padding" ng-cloak>
     <!-- <div id="fb-root"> </div>
     <div layout="row">
     <fb:login-button scope="public_profile,email" onlogin="getUserInfo()" max-rows="1"
@@ -25,8 +25,15 @@
             <h1 class="md-title" >Search radius: </h1>
         </div>
         <div flex="20" layout layout-align="center center">
-            <md-button class="md-raised md-primary">Km</md-button>
-            <md-button class="md-raised md-secondary">mi</md-button>
+            <md-button ng-model="user.selectedUnits" class="md-raised md-primary">Km</md-button>
+            <md-button ng-model="user.selectedUnits" class="md-raised md-secondary">mi</md-button>
+            <md-input-container>
+            <label>Units</label>
+            <md-select ng-model="user.selectedUnits">
+                <md-option>Km</md-option>
+                <md-option>mi</md-option>
+            </md-select>
+        </md-input-container>
         </div>
         <div layout>
             <md-slider flex class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1" max="150" aria-label="rating">
@@ -57,16 +64,9 @@
         </md-input-container>
     </div>
 
-    <div layout layout-sm="row">
-        <md-input-container flex>
-            <input type="submit" value="SAVE" ng-disabled="myForm.$invalid" class="md-primary" aria-label="Save" >
-        </md-input-container>
-        <md-input-container flex>
-            <input type="button" ng-click="cancel()" value="CANCEL" aria-label="Cancel">
-        </md-input-container>
-    </div>
 
-    <md-button class="md-raised md-primary"  ng-click="post()">Save</md-button>
+    <md-button class="md-raised md-primary"  ng-click="post(uid)">Save</md-button>
+    <md-button class="md-raised md-secondery"  ng-click="cencel()">Cencel</md-button>
 
 </div>
 
@@ -81,6 +81,9 @@
 <!-- Angular Material Library -->
 <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<!-- Google location library -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIFZ0tjCUja5jsW9UYJ2DxyRnziLD2wtk&libraries=places"></script>
+
 
 <!-- Your application bootstrap  -->
 <script type="text/javascript">
@@ -158,249 +161,89 @@
 
 
 
-    angular.module('BlankApp', ['ngMaterial', 'ngMessages'])
+    angular.module('SettingsApp', ['ngMaterial'])
             .config(function($mdThemingProvider) {
                 $mdThemingProvider.theme('default')
 
             })
 
-            .controller('BlankAppController',function($scope,$q, $http,$rootScope, $window) {
-                $rootScope.user = {};
-
-                $scope.getUserInfo = function() {
-
-//                    var _self = this;
-
-                    FB.api('/me', function(res) {
-//                        $rootScope.$apply(function() {
-//                            $rootScope.user = _self.user = res;
-                            console.log('logged',res)
-//                        });
-                    });
-
+            .controller('SearchSettingController',function($scope,$q, $http,$rootScope, $window) {
+                $scope.id = $location.search().id;
+                if (localstorage.hasOwnProperty('id')) {
+                    $scope.user.shareLocation = localstorage.id.shareLocation;
+                    $scope.user.searchRadius = localstorage.id.searchRadius;
+                    $scope.user.selectedUnits = localstorage.id.selectedUnits;
+                    $scope.user.age = localstorage.id.age;
+                    $scope.user.shareFriends = localstorage.id.shareFriends;
+                    $scope.user.diet = localstorage.id.diet;
+                } else {
+                    $scope.user.shareLocation = false;
+                    $scope.user.searchRadius = 50;
+                    $scope.user.selectedUnits = 'Km';
+                    $scope.user.age = 18;
+                    $scope.user.shareFriends = false;
+                    $scope.user.diet = 'Regular';
                 }
-
-                $window.fbAsyncInit = function() {
-                    // Executed when the SDK is loaded
-
-                    FB.init({
-
-                        /*
-                         The app id of the web app;
-                         To register a new app visit Facebook App Dashboard
-                         ( https://developers.facebook.com/apps/ )
-                         */
-
-                        appId: '1750455508576911',
-
-                        /*
-                         Adding a Channel File improves the performance
-                         of the javascript SDK, by addressing issues
-                         with cross-domain communication in certain browsers.
-                         */
-
-                        channelUrl: 'app/channel.html',
-
-                        /*
-                         Set if you want to check the authentication status
-                         at the start up of the app
-                         */
-
-                        status: true,
-
-                        /*
-                         Enable cookies to allow the server to access
-                         the session
-                         */
-
-                        cookie: false,
-
-                        /* Parse XFBML */
-
-                        xfbml: true
-                    });
-
-//                    sAuth.watchAuthenticationStatusChange();
-
-                };
-
-                (function(d){
-                    // load the Facebook javascript SDK
-
-                    var js,
-                            id = 'facebook-jssdk',
-                            ref = d.getElementsByTagName('script')[0];
-
-                    if (d.getElementById(id)) {
-                        return;
-                    }
-
-                    js = d.createElement('script');
-                    js.id = id;
-                    js.async = true;
-                    js.src = "//connect.facebook.net/en_US/all.js";
-                    ref.parentNode.insertBefore(js, ref);
-
-                }(document));
-
-                $scope.user = {description:"",id: getParameterByName('id')}
-                $scope.city = "";
-                $http.get("/userdata/" + $scope.user.id)
-                        .then(function(response) {
-                            $scope.user.city = response.data.city;
-                            $scope.city = response.data.city;
-                            $scope.user.description = response.data.description;
-                            $scope.user.gender = response.data.gender;
-                            $scope.user.age = response.data.age;
-                            $scope.user.distance = response.data.distance;
-                            $scope.user.minAge = response.data.minAge;
-                            $scope.user.maxAge = response.data.maxAge;
-                        });
-                $scope.items = [1, 2, 3, 4, 5, 6, 7];
-                $scope.questions =  [
-                    {id: "0",aid: "a0", question:"Are you looking for",multiple: true},
-                    {id: "1",aid: "a1", question:"Age Range"},
-                    {id: "2",aid: "a2", question:"Distance in (km)"},
-                    {id: "3",aid: "a3", question:"Description"},
-                    {id: "4",aid: "a4", question:"Choose your city", multiple: true}
-                ];
-                $scope.ages = [18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60];
-                $scope.distances = [10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,150];
-
-                $scope.genders = ["female","male"];
-
-                $scope.questionText = function(id){
-                    return _.findWhere($scope.questions, {id: id}).question;
-                };
-                $scope.selectedItem;
-                $scope.getSelectedGender = function() {
-                    if ($scope.user.gender !== undefined) {
-                        return "You have selected: " + $scope.user.gender;
-                    } else {
-                        return "Please select a gender";
-                    }
-                }
-
-
-
-                gmapsService = new google.maps.places.AutocompleteService();
-
-                $scope.search = function(address) {
-                    var deferred = $q.defer();
-                    getResults(address).then(
-                            function (predictions) {
-                                var results = [];
-                                for (var i = 0, prediction; prediction = predictions[i]; i++) {
-                                    results.push(prediction.description);
-                                }
-                                deferred.resolve(results);
-                            }
-                    );
-                    return deferred.promise;
-                }
-
-                function getResults(address) {
-                    var deferred = $q.defer();
-                    gmapsService.getQueryPredictions({input: address}, function (data) {
-                        deferred.resolve(data);
-                    });
-                    return deferred.promise;
-                }
-
-
+                 
+                $scope.diets = [Regular, Vegetarian, Vegan];
 
                 $scope.post = function(){
-                    if($scope.city !== $scope.user.city) {
-                        var geocoder = new google.maps.Geocoder();
+                        if($scope.user.shareLocation) {
+                            var geocoder = new google.maps.Geocoder();
 
-                        geocoder.geocode({'address': $scope.user.city}, function (results, status) {
-
-                            if (status == google.maps.GeocoderStatus.OK) {
-                                $scope.user.lat = results[0].geometry.location.lat();
-                                $scope.user.lng = results[0].geometry.location.lng();
-                                $.ajax({
-                                    type: "POST",
-                                    url: '/settings/',
-                                    data: $scope.user,
-                                    dataType: "json",
-                                    timeout: 15000,
-                                    success: function (res) {
-                                        if (res.success) {
-                                            $scope.submitSuccess = true;
-                                            $scope.statusMessage = "Updated succesfully";
-                                        }
-                                        else {
-                                            $scope.statusMessage = "Updated succesfully";
-                                            $scope.disablePost = false;
-                                        }
-                                        $scope.$apply();
-                                    },
-                                    error: function () {
-                                        $scope.statusMessage = "Updated succesfully";
-                                        $scope.disablePost = false;
-                                        $scope.$apply();
-                                    },
-                                    complete: function () {
-                                        $scope.submitSuccess = true;
-                                        $scope.statusMessage = "Updated succesfully";
-                                        window.close()
-
-//                            $timeout(function(){
-//                                $scope.submitSuccess = false;
-//                                $scope.statusMessage = "";
-//                            }, 3000);
-                                    }
-                                });
-                            }
-                            else {
-                                console.log($scope.user);
-
-                            }
-                        })
-                    }
-                    else
-                    {
-                        $.ajax({
-                            type: "POST",
-                            url: '/settings/',
-                            data: $scope.user,
-                            dataType: "json",
-                            timeout: 15000,
-                            success: function (res) {
-                                if (res.success) {
-                                    $scope.submitSuccess = true;
-                                    $scope.statusMessage = "Updated succesfully";
+                            geocoder.geocode($scope.user.location, function (results, status) {
+                                if (status == google.maps.GeocoderStatus.OK) {
+                                    $scope.user.location = results[0].geometry.location.lat();
                                 }
                                 else {
+                                    console.log($scope.user);
+                                }
+                            })
+                        }
+                        else
+                        {
+                            $.ajax({
+                                type: "POST",
+                                url: '/settings/',
+                                data: $scope.user,
+                                dataType: "json",
+                                timeout: 15000,
+                                success: function (res) {
+                                    if (res.success) {
+                                        $scope.submitSuccess = true;
+                                        $scope.statusMessage = "Updated succesfully";
+                                    }
+                                    else {
+                                        $scope.statusMessage = "Updated succesfully";
+                                        $scope.disablePost = false;
+                                    }
+                                    $scope.$apply();
+                                },
+                                error: function () {
                                     $scope.statusMessage = "Updated succesfully";
                                     $scope.disablePost = false;
-                                }
-                                $scope.$apply();
-                            },
-                            error: function () {
-                                $scope.statusMessage = "Updated succesfully";
-                                $scope.disablePost = false;
-                                $scope.$apply();
-                            },
-                            complete: function () {
-                                $scope.submitSuccess = true;
-                                $scope.statusMessage = "Updated succesfully";
-                                window.close()
+                                    $scope.$apply();
+                                },
+                                complete: function () {
+                                    $scope.submitSuccess = true;
+                                    $scope.statusMessage = "Updated succesfully";
+                                    window.close()
 
 //                            $timeout(function(){
 //                                $scope.submitSuccess = false;
 //                                $scope.statusMessage = "";
 //                            }, 3000);
-                            }
-                        });
+                                }
+                            });
+
+                        }
+
+                        console.log($scope.user);
+                        $scope.disablePost = true;
 
                     }
-
-                    console.log($scope.user);
-                    $scope.disablePost = true;
-
-                }
-            });
+                });
+    </script>
 </script>
 </body>
 
