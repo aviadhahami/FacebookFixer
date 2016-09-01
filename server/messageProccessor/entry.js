@@ -2,6 +2,7 @@
 
 const sendApi = require('./../api/sendAPI');
 const botApi = require('./../api/botApi');
+const menuProvider = require('./../persistantMenu/menu');
 
 function isNew(sender) {
 	return true;
@@ -27,6 +28,7 @@ function greetByTime(timeDiff) {
 }
 
 const entry = function (sender, text) {
+	menuController.pushMenu(sender);
 	
 	if (isNew(sender) && isNotActive(sender)) {
 		// TODO: Register user to db
