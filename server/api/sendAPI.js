@@ -52,7 +52,7 @@ module.exports = {
 				console.error(error);
 				deferred.reject(error);
 			}
-			return deferred.promise;
 		});
+		return deferred.promise;
 	}
 };

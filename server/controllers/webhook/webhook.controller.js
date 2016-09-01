@@ -30,21 +30,17 @@ function post(req, res) {
 function sendTextMessage(sender, text) {
 	let messageData = { text:text };
 	sendApi.callSendAPI(botApi.loadingIndicator(sender));
-	setTimeout(
-		function () {
-			sendApi.getUserData(sender).then(function(res){
-				console.log('my res',res);
-				let firstName = res['first_name'] || '';
-				let text = `Hi ${firstName}! How may I help you today?`;
-				sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
-			},function(err){
-				console.log('err from prome',err)
-			});
-			
-			
-			
-		}
-		, 3000);
+	sendApi.getUserData(sender).then(function(res){
+		console.log('my res',res);
+		let firstName = res['first_name'] || '';
+		let text = `Hi ${firstName}! How may I help you today?`;
+		sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
+	},function(err){
+		console.log('err from prome',err)
+	});
+	
+	
+	
 }
 
 module.exports = {
