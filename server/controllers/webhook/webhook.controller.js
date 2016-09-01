@@ -1,6 +1,7 @@
 /**
  * Created by aviad on 9/1/2016.
  */
+'use strict';
 
 function get(req,res){
 	if (req.query['hub.verify_token'] === 'my_voice_is_my_password_verify_me') {

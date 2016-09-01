@@ -1,6 +1,7 @@
 /**
  * Created by aviad on 9/1/2016.
  */
+'use strict';
 
 const indexController = require('./index/index.controller');
 const webhookController = require('./webhook/webhook.controller');
