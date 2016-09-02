@@ -11,7 +11,7 @@ let query = 'italian restaurant in tel aviv';
 
 function searchByQuery(query, location, radius) {
 	let deferred = q.defer();
-	let uri = 'https://maps.googleapis.com/maps/api/place/textsearch/json?location=' + location.latitude+','+location.longitude
+	let uri = 'https://maps.googleapis.com/maps/api/place/textsearch/json?location=' + location.lat+','+location.lng
 		+ '&radius=' + radius + '&query=' + query + '&key=' + key + '&libraries=places&output=json';
 	console.log('this is the query', uri);
 	https.get(uri, function (response) {
