@@ -4,7 +4,7 @@
 
 
 module.exports = {
-	generateMenu: function () {
+	generateMenu: function (id) {
 		return {
 			"setting_type" : "call_to_actions",
 			"thread_state" : "existing_thread",
@@ -17,7 +17,7 @@ module.exports = {
 				{
 					"type":"web_url",
 					"title":"Settings",
-					"url":"https://serene-spire-62562.herokuapp.com/client"
+					"url":"https://serene-spire-62562.herokuapp.com/client?id="+id
 				}
 			]
 		}

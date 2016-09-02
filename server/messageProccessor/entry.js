@@ -3,6 +3,7 @@
 const sendApi = require('./../api/sendAPI');
 const botApi = require('./../api/botApi');
 const apiAi = require('./../apiai/apiAi');
+const clientSettingsProvider = require('./../clientSettings/clientSettings');
 
 const apology = "I'm really sorry but I couldn't find anything for you...";
 
@@ -30,7 +31,9 @@ function greetByTime(timeDiff) {
 }
 
 const entry = function (sender, text) {
-
+	
+	sendApi.callThreadAPI(clientSettingsProvider.generateMenu(sender));
+	
 	if (isNew(sender) && isNotActive(sender)) {
 		// TODO: Register user to db
 		// TODO: Set user to active

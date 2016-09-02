@@ -22,7 +22,6 @@ app.use(bodyParser.json());
 
 
 // Boostrap
-sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
 // request("https://graph.facebook.com/v2.6/me/thread_settings?access_token=" + token, {
 // 	method: 'DELETE',
 // 	json: {
