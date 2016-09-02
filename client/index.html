@@ -157,15 +157,15 @@
                     $scope.user = JSON.parse(storage.user);
                 } else { // Defaults
                     $scope.user = {};
-                    $scope.user.id = $scope.id;
-                    $scope.user.shareLocation = false;
-                    $scope.user.searchRadius = 50;
-                    $scope.user.selectedUnits = 'Km';
-                    $scope.user.age = 18;
-                    $scope.user.shareFriends = false;
-                    $scope.user.diet = 'Regular';
                 }
-
+                $scope.user.id = $scope.id || $scope.user.id;
+                $scope.user.shareLocation = false || $scope.user.shareLocation;
+                $scope.user.searchRadius = $scope.user.searchRadius || 50;
+                $scope.user.selectedUnits = $scope.user.selectedUnits || 'Km';
+                $scope.user.age = $scope.user.age || 18;
+                $scope.user.shareFriends = false || $scope.user.shareFriends;
+                $scope.user.diet = $scope.user.diet || 'Regular';
+                $scope.user.location = {lat: latitude, lng: longitude} || $scope.user.location;
             });
 </script>
 </body>
