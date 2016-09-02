@@ -6,23 +6,23 @@
 module.exports = {
 	generateMenu: function () {
 		return {
-			"setting_type": "call_to_actions",
-			"thread_state": "existing_thread",
-			"call_to_actions": [
+			"setting_type" : "call_to_actions",
+			"thread_state" : "existing_thread",
+			"call_to_actions":[
 				{
-					"type": "web_url",
-					"title": "Search Settings",
-					"url": "/client/index.html"
+					"type":"postback",
+					"title":"Help",
+					"payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
 				},
 				{
-					"type": "postback",
-					"title": "History",
-					"payload": "History_Payload"
+					"type":"postback",
+					"title":"Start a New Order",
+					"payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_START_ORDER"
 				},
 				{
-					"type": "postback",
-					"title": "Report A Bug",
-					"payload": "Report_A_Bug_Payload"
+					"type":"web_url",
+					"title":"View Website",
+					"url":"http://petersapparel.parseapp.com/"
 				}
 			]
 		}
