@@ -20,15 +20,12 @@ module.exports = {
 	},
 	callThreadAPI:function(payload){
 		let deferred = q.defer();
-		request({
-			uri: 'https://graph.facebook.com/v2.6/me/thread_settings',
-			qs: { access_token: token },
-			headers:{
-				'Content-Type': 'application/json'
-			},
+		request('https://graph.facebook.com/v2.6/me/thread_settings?access_token='+token,{
 			method: 'POST',
 			json: payload
 		}, function (error, response, body) {
+			
+			console.log('From menu', error, response, body);
 			if (!error && response.statusCode == 200) {
 				deferred.resolve(body);
 			} else {
