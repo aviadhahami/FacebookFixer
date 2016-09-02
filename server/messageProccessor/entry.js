@@ -44,7 +44,7 @@ const entry = function (sender, text) {
 				// let text = `${greeting} ${firstName}, how may I help you?`;
                 apiAi.request(text, sender).then(
                     function(response) {
-						console.log('entry.js resolved');
+						console.log('entry.js resolved',response);
 						sendApi.callSendAPI(sendApi.generateTextPayload(sender, response.result.fulfillment.speech));
                     },
                     function(error) {
