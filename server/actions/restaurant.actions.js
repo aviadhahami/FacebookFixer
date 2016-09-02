@@ -26,6 +26,7 @@ function fetchNearby(params) {
 	let id = params.sessionId;
 	if(!!id && activeUsers.hasOwnProperty(id)){
 		let user = activeUsers[id];
+		console.log('this is user', user);
 		googleAPI.searchByQuery(`${params.type} restaurant`, user.location, user.searchRadius).then(function (res) {
 			deferred.resolve(res);
 		}, function (err) {
