@@ -4,7 +4,7 @@
 function handlePost(req, res) {
 	let id = req.body.user.id;
 	let user = req.body.user;
-	console.log(req);
+	console.log(id,user);
 	res.send(200);
 };
 
