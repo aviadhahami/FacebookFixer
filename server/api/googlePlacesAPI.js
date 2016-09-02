@@ -26,10 +26,11 @@ function searchByQuery(query, location, radius) {
             let response = {
                 result: {
                     fulfillment: {
-                        speech: getResultsString(places.results)
+                        // speech: getResultsString(places.results)
+						speech: 'Test me :D'
                     }
                 }
-            }
+            };
 
 			deferred.resolve(response);
 		});
