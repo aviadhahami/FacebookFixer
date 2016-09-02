@@ -21,8 +21,8 @@ module.exports = {
 				},
 				{
 					"type":"web_url",
-					"title":"View Website",
-					"url":"http://petersapparel.parseapp.com/"
+					"title":"Settings",
+					"url":"/client"
 				}
 			]
 		}
