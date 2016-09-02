@@ -51,7 +51,7 @@ function getResultsString(data) {
     for (let i = 0; i < length; i++) {
         names += openNow[i].name + ' ';
         names += openNow[i].hasOwnProperty('formatted_address') ? 'found at ' + openNow[i].formatted_address : '';
-        names += '\n\n';
+        names += '\n---\n';
     }
     return names;
 }
