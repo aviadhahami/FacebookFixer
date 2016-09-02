@@ -22,7 +22,7 @@ module.exports = {
 				{
 					"type":"web_url",
 					"title":"Settings",
-					"url":"/client"
+					"url":"https://serene-spire-62562.herokuapp.com/client"
 				}
 			]
 		}
