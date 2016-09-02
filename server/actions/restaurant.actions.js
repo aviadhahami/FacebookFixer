@@ -22,7 +22,16 @@ function fetchRemote(params) {
 
 
 function fetchNearby(params) {
-
+	let deferred = q.defer();
+	let id = params.sessionId;
+	if(!!id && activeUsers.hasOwnProperty(id)){
+		googleAPI.searchByQuery(`${params.type} restaurant`, activeUsers.location, 1000).then(function (res) {
+			deferred.resolve(res);
+		}, function (err) {
+			deferred.reject(err);
+		});
+	}
+	return deferred.promise;
 }
 
 module.exports = {
