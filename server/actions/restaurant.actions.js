@@ -26,11 +26,12 @@ function fetchNearby(params) {
 	let deferred = q.defer();
 	let id = params.sessionId;
 	console.log('this is user', activeUsers);
-	let hardCords = {lat:'32.061983',lng: '34.778873'}
+	let hardCords = {lat:'32.061983',lng: '34.778873'};
+	let hardRadius = 1000;
 	if((!!id && activeUsers.hasOwnProperty(id)) || true){
 		let user = activeUsers[id];
 		console.log('this is user', user);
-		googleAPI.searchByQuery(`${params.type} restaurant`, hardCords, user.searchRadius).then(function (res) {
+		googleAPI.searchByQuery(`${params.type} restaurant`, hardCords, hardRadius).then(function (res) {
 			deferred.resolve(res);
 		}, function (err) {
 			deferred.reject(err);
