@@ -7,10 +7,10 @@ const technicianActions = require('./../actions/technician.actions');
 
 const actions = {
 	
-	'fetch-technician-remote': restaurantActions.fetchRemote,
-	'fetch-technician-nearby': restaurantActions.fetchNearby,
-	'fetch-restaurants-remote': technicianActions.fetchRemote,
-	'fetch-restaurants-nearby': technicianActions.fetchNearby
+	'fetch-technician-remote': technicianActions.fetchRemote,
+	'fetch-technician-nearby': technicianActions.fetchNearby,
+	'fetch-restaurants-remote': restaurantActions.fetchRemote,
+	'fetch-restaurants-nearby': restaurantActions.fetchNearby,
 };
 
 
