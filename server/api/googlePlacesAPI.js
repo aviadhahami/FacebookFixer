@@ -5,10 +5,6 @@ const q = require('q');
 const geocoder = require('geocoder');
 const key = require('./../secrets').placesKey;
 
-// let location = '32.062102, 34.778758';
-let radius = '500';
-let query = 'italian restaurant in tel aviv';
-
 function searchByQuery(query, location, radius) {
 	let deferred = q.defer();
 	let uri = 'https://maps.googleapis.com/maps/api/place/textsearch/json?location=' + location.lat+','+location.lng

@@ -4,6 +4,8 @@ const sendApi = require('./../api/sendAPI');
 const botApi = require('./../api/botApi');
 const apiAi = require('./../apiai/apiAi');
 
+const apology = "I'm really sorry but I couldn't find anything for you...";
+
 function isNew(sender) {
 	return true;
 }
@@ -45,7 +47,8 @@ const entry = function (sender, text) {
                 apiAi.request(text, sender).then(
                     function(response) {
 						console.log('entry.js resolved',response);
-						sendApi.callSendAPI(sendApi.generateTextPayload(sender, response.result.fulfillment.speech));
+						let text = response.result.fulfillment.speech ? response.result.fulfillment.speech : apology;
+						sendApi.callSendAPI(sendApi.generateTextPayload(sender, text));
                     },
                     function(error) {
                         console.log(error);
