@@ -2,6 +2,7 @@
 
 const googleAPI = require('./../api/googlePlacesAPI');
 const q = require('q');
+const activeUsers = require('./../activeUsers/activeUsers');
 
 function fetchRemote(params) {
     let deferred = q.defer();

@@ -9,7 +9,7 @@ function handlePost(req, res) {
 	if(!!id){
 		activeUsers[id] = user;
 	}
-	res.send(200);
+	res.json({status:'GREAT SUCCESS'});
 };
 
 
