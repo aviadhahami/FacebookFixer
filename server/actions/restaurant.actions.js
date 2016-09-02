@@ -25,6 +25,8 @@ function fetchNearby(params) {
 	console.log('Fetching nerbby');
 	let deferred = q.defer();
 	let id = params.sessionId;
+	console.log('this is user', activeUsers);
+	
 	if(!!id && activeUsers.hasOwnProperty(id)){
 		let user = activeUsers[id];
 		console.log('this is user', user);
@@ -33,6 +35,8 @@ function fetchNearby(params) {
 		}, function (err) {
 			deferred.reject(err);
 		});
+	}else{
+		deferred.reject('No user');
 	}
 	return deferred.promise;
 }
