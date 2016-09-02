@@ -9,37 +9,39 @@ let radius = '500';
 let query = 'italian restaurant in tel aviv';
 
 https.get('https://maps.googleapis.com/maps/api/place/textsearch/json?' //location=' + location
-	+ '&radius=' + radius + '&query=' + query + '&key=' + key + '&libraries=places&output=json', function(response) {
-     var body ='';
-    response.on('data', function(chunk) {
-      body += chunk;
+    + '&radius=' + radius + '&query=' + query + '&key=' + key + '&libraries=places&output=json', function (response) {
+    var body = '';
+    response.on('data', function (chunk) {
+        body += chunk;
     });
 
-    response.on('end', function() {
-      var places = JSON.parse(body);
-      var locations = places.results;
-      var randLoc = locations[Math.floor(Math.random() * locations.length)];
-      var resArr = [];
+    response.on('end', function () {
+        var places = JSON.parse(body);
 
-      for(var i=0; i<places.results.length; i++){
-      	resArr.push(parsePlace(places.results[i]));
-      }
-      console.log(resArr);
+        var resArr = [];
+
+        for (var i = 0; i < places.results.length; i++) {
+            resArr.push(parsePlace(places.results[i]));
+        }
+        console.log(resArr);
 
     });
-}).on('error', function(e) {
-  console.log(`Got error: ${e.message}`);
+}).on('error', function (e) {
+    console.log(`Got error: ${e.message}`);
 });
 
-function parsePlace(place){
-  var obj=new Object;
-  obj.name=place.name;
-  obj.website=place.website;
-  obj.adress=place.formatted_address;
-  obj.rating=place.rating;
-  if(typeof obj.rating==="undefined"){obj.rating="Not Rated Yet";}
-  obj.opening_hours=place.opening_hours;
-  obj.phone_number=place.international_phone_number;
-  obj.types=place.types;
-  return obj;
+function parsePlace(place) {
+    var obj = {};
+    obj.name = place.name;
+    obj.website = place.website;
+    obj.adress = place.formatted_address;
+    obj.rating = place.rating;
+    if (typeof obj.rating === "undefined") {
+        obj.rating = "Not Rated Yet";
+    }
+    obj.opening_hours = place.opening_hours;
+    obj.phone_number = place.international_phone_number;
+    obj.types = place.types;
+
+    return obj;
 }
