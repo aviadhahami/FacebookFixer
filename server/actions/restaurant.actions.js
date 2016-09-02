@@ -22,6 +22,7 @@ function fetchRemote(params) {
 
 
 function fetchNearby(params) {
+	console.log('Fetching nerbby');
 	let deferred = q.defer();
 	let id = params.sessionId;
 	if(!!id && activeUsers.hasOwnProperty(id)){
