@@ -158,6 +158,7 @@
                 } else { // Defaults
                     $scope.user = {};
                 }
+
                 $scope.user.id = $scope.id || $scope.user.id;
                 $scope.user.shareLocation = false || $scope.user.shareLocation;
                 $scope.user.searchRadius = $scope.user.searchRadius || 50;
@@ -165,6 +166,9 @@
                 $scope.user.age = $scope.user.age || 18;
                 $scope.user.shareFriends = false || $scope.user.shareFriends;
                 $scope.user.diet = $scope.user.diet || 'Regular';
+                if ($scope.user.shareLocation && navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(showPosition);
+                }
             });
 </script>
 </body>
