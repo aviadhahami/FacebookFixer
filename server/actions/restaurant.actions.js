@@ -7,6 +7,7 @@ function fetchRemote(params) {
 	let deferred = q.defer();
 	let location = params.location;
 	googleAPI.decodeLocation(location).then(function(parsedLocation){
+		console.log('parsed location is', parsedLocation);
 		googleAPI.searchByQuery(`${params.type} restaurant`,parsedLocation,1000).then(function(res){
 			deferred.resolve(res);
 		}, function(err){
