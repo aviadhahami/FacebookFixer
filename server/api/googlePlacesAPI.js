@@ -22,7 +22,16 @@ function searchByQuery(query, location, radius) {
 		response.on('end', function () {
 			let places = JSON.parse(body);
 			console.log('Resolved places, will return to caller');
-			deferred.resolve(places.results);
+
+            let response = {
+                result: {
+                    fulfillment: {
+                        speech: getResults(places.results)
+                    }
+                }
+            }
+
+			deferred.resolve(response);
 		});
 		
 	}).on('error', function (e) {
@@ -32,6 +41,16 @@ function searchByQuery(query, location, radius) {
 	
 	return deferred.promise;
 };
+
+function getResults(data) {
+    let names = [];
+
+    data.forEach(function(el) {
+        names.push(el.name);
+    });
+
+    return names;
+}
 
 function decodeLocation(location) {
 	let deferred = q.defer();
