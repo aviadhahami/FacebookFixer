@@ -1,3 +1,5 @@
+"use strict";
+
 const googleAPI = require('./../api/googlePlacesAPI');
 const q = require('q');
 
