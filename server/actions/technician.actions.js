@@ -19,6 +19,7 @@ function fetchRemote(params) {
     return deferred.promise;
 }
 
+
 function fetchNearby(params) {
 
 }
