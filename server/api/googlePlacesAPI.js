@@ -26,7 +26,7 @@ function searchByQuery(query, location, radius) {
             let response = {
                 result: {
                     fulfillment: {
-                        speech: getResults(places.results)
+                        speech: getResultsString(places.results)
                     }
                 }
             }
@@ -42,11 +42,11 @@ function searchByQuery(query, location, radius) {
 	return deferred.promise;
 };
 
-function getResults(data) {
-    let names = [];
+function getResultsString(data) {
+    let names = '';
 
     data.forEach(function(el) {
-        names.push(el.name);
+        names += el.name + '\n';
     });
 
     return names;
