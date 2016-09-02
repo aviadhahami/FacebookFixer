@@ -41,10 +41,11 @@ function searchByQuery(query, location, radius) {
 };
 
 function getResultsString(data) {
+	console.log(data);
 	let names = '';
 	let length = Math.min(data.length, 5);
 	for (let i = 0; i < length; i++) {
-		names += data[i].name + '\n';
+		names += data[i].name + '\n\n';
 	}
 	return names;
 }
