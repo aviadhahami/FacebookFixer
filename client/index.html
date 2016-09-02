@@ -8,64 +8,74 @@
           href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
 </head>
 <body ng-app="SettingsApp" ng-cloak>
-<div ng-controller="SearchSettingController" class="md-padding" ng-cloak>
-    <md-content>
-        <div layout="row">
-            <md-icon md-svg-icon="./images/settings-icon.svg"></md-icon>
-            <h1 class="md-title">Search settings</h1>
-        </div>
-        <div>
-            <md-checkbox ng-model="user.shareLocation" aria-label="Share location">
-                Share location
-            </md-checkbox>
-        </div>
-        <div layout="row">
-            <div flex="20">
-                <h2 class="md-title">Search radius:</h2>
+<md-card ng-controller="SearchSettingController" class="md-padding" ng-cloak>
+    <div layout="column" flex="100" layout-align="center center" layout-wrap>
+        <md-toolbar md-scroll-shrink>
+            <div class="md-toolbar-tools">Settings</div>
+        </md-toolbar>
+    </div>
+    <md-card-content>
+        <div layout="row" layout-align="start center">
+            <div layout="column" flex="100">
+                <div layout="row" flex="100">
+                    <div flex="70">
+                        <h3 class="md-subhead" style="line-height: 2.5">Search radius</h3>
+                    </div>
+                    <div layout="row" flex>
+                        <div flex>
+                            <h3 class="md-subhead">distance units</h3>
+                        </div>
+                        <div flex>
+                            <md-select ng-model="user.selectedUnits">
+                                <md-option>Km</md-option>
+                                <md-option>mi</md-option>
+                            </md-select>
+                        </div>
+                    </div>
+                </div>
+                <div layout="row" flex="100">
+                    <md-slider class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1"
+                               max="150"
+                               aria-label="rating" style="width:100%;">
+                    </md-slider>
+                </div>
             </div>
-            <div flex="10">
+        </div>
+        <div layout="row" flex="100">
+            <div flex="30">
+                <md-input-container class="md-block" flex-gt-sm>
+                    <label>Age</label>
+                    <input name="age" ng-model="user.age"/>
+                </md-input-container>
+            </div>
+            <div flex="50">
                 <md-input-container>
-                    <label>Units</label>
-                    <md-select ng-model="user.selectedUnits">
-                        <md-option>Km</md-option>
-                        <md-option>mi</md-option>
+                    <label>Diet</label>
+                    <md-select ng-model="user.diet">
+                        <md-option ng-repeat="diet in diets" ng-value="diet">
+                            {{diet}}
+                        </md-option>
                     </md-select>
                 </md-input-container>
             </div>
-            <div flex="40">
-                <md-slider class="md-primary" md-discrete ng-model="user.searchRadius" step="0.1" min="0.1" max="150"
-                           aria-label="rating">
-                </md-slider>
+        </div>
+        <div layout="row" layout-align="start start">
+            <div layout="column" flex="70">
+                <md-checkbox ng-model="user.shareLocation" aria-label="Share location">
+                    Share location
+                </md-checkbox>
+                <md-checkbox ng-model="user.shareFriends" aria-label="Share friends">
+                    Share facebook friends list
+                </md-checkbox>
             </div>
-            <div flex></div>
+            <div layout="row" flex>
+                <md-button class="md-raised md-primary" ng-click="post()">Save</md-button>
+                <md-button class="md-raised md-secondery" ng-click="cancel()">Cancel</md-button>
+            </div>
         </div>
-        <div>
-            <md-checkbox ng-model="user.shareFriends" aria-label="Share friends">
-                Share facebook friends list
-            </md-checkbox>
         </div>
-        <div>
-            <md-input-container class="md-block" flex-gt-sm>
-                <label>Age</label>
-                <input name="age" ng-model="user.age"/>
-            </md-input-container>
-        </div>
-        <div>
-            <md-input-container>
-                <label>Diet</label>
-                <md-select ng-model="user.diet">
-                    <md-option ng-repeat="diet in diets" ng-value="diet">
-                        {{diet}}
-                    </md-option>
-                </md-select>
-            </md-input-container>
-        </div>
-
-
-        <md-button class="md-raised md-primary" ng-click="post()">Save</md-button>
-        <md-button class="md-raised md-secondery" ng-click="cancel()">Cancel</md-button>
-    </md-content>
-</div>
+    </md-card-content>
+</md-card>
 
 <!-- Angular Material requires Angular.js Libraries -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
@@ -147,7 +157,7 @@
                 let m = re.exec($window.location.search);
                 if (!!m && m.length > 0) {
                     $scope.id = m[1];
-                }else{
+                } else {
                     $scope.id = '';
                 }
 
