@@ -21,7 +21,16 @@ function fetchRemote(params) {
 
 
 function fetchNearby(params) {
+    let deferred = q.defer();
+    let location = params.location;
 
+    googleAPI.searchByQuery(`${params.type} technician`, parsedLocation, 1000).then(function (res) {
+        deferred.resolve(res);
+    }, function (err) {
+        deferred.reject(err);
+    });
+
+    return deferred.promise;
 }
 
 module.exports = {
