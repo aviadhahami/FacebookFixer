@@ -7,12 +7,13 @@ function handlePost(req, res) {
 	let user = req.body.user;
 	console.log(id,user);
 	if(!!id){
+		console.log('injecting to DB');
 		activeUsers[id] = user;
 	}
-	res.json({status:'GREAT SUCCESS'});
+	res.json({status:'ok'});
 };
 
 
 module.exports = {
 	post: handlePost
-}
+};
