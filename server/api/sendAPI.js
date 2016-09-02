@@ -25,7 +25,7 @@ module.exports = {
 			json: payload
 		}, function (error, response, body) {
 			
-			console.log('From menu', error, response, body);
+			console.log('From menu', error, body);
 			if (!error && response.statusCode == 200) {
 				deferred.resolve(body);
 			} else {
