@@ -8,19 +8,19 @@ const token = require('./../secrets').token;
 const q = require('q');
 
 module.exports = {
-	generateTextPayload:function(id,text){
-		return{
+	generateTextPayload: function (id, text) {
+		return {
 			recipient: {
-				id:id
+				id: id
 			},
 			message: {
-				text:text
+				text: text
 			},
 		}
 	},
-	callThreadAPI:function(payload){
+	callThreadAPI: function (payload) {
 		let deferred = q.defer();
-		request('https://graph.facebook.com/v2.6/me/thread_settings?access_token='+token,{
+		request('https://graph.facebook.com/v2.6/me/thread_settings?access_token=' + token, {
 			method: 'POST',
 			json: payload
 		}, function (error, response, body) {
@@ -29,16 +29,16 @@ module.exports = {
 			if (!error && response.statusCode == 200) {
 				deferred.resolve(body);
 			} else {
-				deferred.reject(error,response, body);
+				deferred.reject(error, response, body);
 			}
 		});
 		return deferred.promise;
 	},
-	callSendAPI: function(messageData){
+	callSendAPI: function (messageData) {
 		let deferred = q.defer();
 		request({
 			uri: 'https://graph.facebook.com/v2.6/me/messages',
-			qs: { access_token: token },
+			qs: {access_token: token},
 			method: 'POST',
 			json: messageData
 			
@@ -57,12 +57,12 @@ module.exports = {
 		});
 		return deferred.promise;
 	},
-	getUserData: function(id){
+	getUserData: function (id) {
 		let deferred = q.defer();
 		request({
-			method:'GET',
-			url:'https://graph.facebook.com/v2.6/'+id+'?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token='+token
-		},function (error, response, body) {
+			method: 'GET',
+			url: 'https://graph.facebook.com/v2.6/' + id + '?fields=first_name,last_name,profile_pic,locale,timezone,gender&access_token=' + token
+		}, function (error, response, body) {
 			if (!error && response.statusCode == 200) {
 				deferred.resolve(body);
 			} else {
