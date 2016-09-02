@@ -22,16 +22,16 @@ app.use(bodyParser.json());
 
 
 // Boostrap
-// sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
-request("https://graph.facebook.com/v2.6/me/thread_settings?access_token=" + token, {
-	method: 'DELETE',
-	json: {
-		"setting_type": "call_to_actions",
-		"thread_state": "existing_thread"
-	}
-}, function (res) {
-	console.log('delte res', res);
-});
+sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
+// request("https://graph.facebook.com/v2.6/me/thread_settings?access_token=" + token, {
+// 	method: 'DELETE',
+// 	json: {
+// 		"setting_type": "call_to_actions",
+// 		"thread_state": "existing_thread"
+// 	}
+// }, function (res) {
+// 	console.log('delte res', res);
+// });
 sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
 
 app.use(express.static(path.join(__dirname, '..', 'client')));
