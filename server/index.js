@@ -20,7 +20,7 @@ app.use(bodyParser.json());
 
 
 // Boostrap
-sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
+// sendApi.callThreadAPI(clientSettingsProvider.generateMenu());
 sendApi.callThreadAPI(clientSettingsProvider.generateGreeting());
 
 app.use(express.static(path.join(__dirname,'..','client')));
