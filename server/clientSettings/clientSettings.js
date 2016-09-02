@@ -11,13 +11,8 @@ module.exports = {
 			"call_to_actions":[
 				{
 					"type":"postback",
-					"title":"Help",
+					"title":"Report bug",
 					"payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_HELP"
-				},
-				{
-					"type":"postback",
-					"title":"Start a New Order",
-					"payload":"DEVELOPER_DEFINED_PAYLOAD_FOR_START_ORDER"
 				},
 				{
 					"type":"web_url",
