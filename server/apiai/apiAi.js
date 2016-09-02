@@ -23,6 +23,7 @@ module.exports = {
 				
 				actionsAPI(action,parameters).then(
 					function(actionRes) {
+						console.log('this is actionRes', actionRes);
 						deferred.resolve(actionRes);
 					},
 					function(actionErr) {

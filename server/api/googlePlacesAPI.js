@@ -29,6 +29,7 @@ function searchByQuery(query, location, radius) {
 		deferred.reject(`Got error: ${e.message}`);
 		console.log(`Got error: ${e.message}`);
 	});
+	
 	return deferred.promise;
 };
 
