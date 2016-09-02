@@ -21,7 +21,7 @@ function searchByQuery(query, location, radius) {
 		
 		response.on('end', function () {
 			let places = JSON.parse(body);
-			console.log(places.results);
+			console.log('Resolved places, will return to caller');
 			deferred.resolve(places.results);
 		});
 		
