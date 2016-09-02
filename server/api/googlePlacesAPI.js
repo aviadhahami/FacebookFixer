@@ -47,7 +47,7 @@ function getResultsString(data) {
     });
     console.log(openNow);
     let names = '';
-    let length = Math.min(openNow.length, 5);
+    let length = Math.min(openNow.length, 3);
     for (let i = 0; i < length; i++) {
         names += openNow[i].name + ' ';
         names += openNow[i].hasOwnProperty('formatted_address') ? 'found at ' + openNow[i].formatted_address : '';
