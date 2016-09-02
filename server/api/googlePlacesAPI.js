@@ -33,12 +33,18 @@ function searchByQuery(query, location, radius) {
 };
 
 function decodeLocation(location) {
-    geocoder.geocode(location, function(err, data) {
-        return(data.results[0].geometry.location);
-    })
+	let deferred = q.defer();
+	geocoder.geocode(location, function (err, data) {
+		if (err) {
+			deferred.reject(err);
+		} else { // TODO: verify this doesn't die here
+			deferred.resolve(data.results[0].geometry.location);
+		}
+	});
+	return deferred.promise;
 };
 
 module.exports = {
 	searchByQuery: searchByQuery,
-    decodeLocation: decodeLocation
+	decodeLocation: decodeLocation
 };
