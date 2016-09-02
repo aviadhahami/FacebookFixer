@@ -22,16 +22,15 @@ function searchByQuery(query, location, radius) {
 		response.on('end', function () {
 			let places = JSON.parse(body);
 			console.log('Resolved places, will return to caller');
-
-            let response = {
-                result: {
-                    fulfillment: {
-                        // speech: getResultsString(places.results)
-						speech: 'Test me :D'
-                    }
-                }
-            };
-
+			
+			let response = {
+				result: {
+					fulfillment: {
+						speech: getResultsString(places.results)
+					}
+				}
+			};
+			
 			deferred.resolve(response);
 		});
 		
@@ -44,13 +43,12 @@ function searchByQuery(query, location, radius) {
 };
 
 function getResultsString(data) {
-    let names = '';
-
-    data.forEach(function(el) {
-        names += el.name + '\n';
-    });
-
-    return names;
+	let names = '';
+	let length = Math.min(data.length, 5);
+	for (let i = 0; i < length; i++) {
+		names += data[i].name + '\n';
+	}
+	return names;
 }
 
 function decodeLocation(location) {
