@@ -56,12 +56,9 @@ function getResultsString(data) {
 function decodeLocation(location) {
 	let deferred = q.defer();
 	geocoder.geocode(location, function (err, data) {
-		if (err) {
-			deferred.reject(err);
-		} else { // TODO: verify this doesn't die here
 			deferred.resolve(data.results[0].geometry.location);
 		}
-	});
+	);
 	return deferred.promise;
 };
 
