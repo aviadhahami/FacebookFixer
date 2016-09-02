@@ -2,12 +2,12 @@
 
 const https = require('https');
 const q = require('q');
+const geocoder = require('geocoder');
 const key = require('./../secrets').placesKey;
 
 // let location = '32.062102, 34.778758';
 let radius = '500';
 let query = 'italian restaurant in tel aviv';
-
 
 function searchByQuery(query, location, radius) {
 	let deferred = q.defer();
@@ -32,6 +32,13 @@ function searchByQuery(query, location, radius) {
 	return deferred.promise;
 };
 
+function decodeLocation(location) {
+    geocoder.geocode(location, function(err, data) {
+        return(data.results[0].geometry.location);
+    })
+};
+
 module.exports = {
-	searchByQuery: searchByQuery
+	searchByQuery: searchByQuery,
+    decodeLocation: decodeLocation
 };
