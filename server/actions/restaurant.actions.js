@@ -27,7 +27,7 @@ function fetchNearby(params) {
 	let id = params.sessionId;
 	console.log('this is user', activeUsers);
 	let hardCords = {lat:'32.061983',lng: '34.778873'}
-	if(!!id && activeUsers.hasOwnProperty(id)){
+	if((!!id && activeUsers.hasOwnProperty(id)) || true){
 		let user = activeUsers[id];
 		console.log('this is user', user);
 		googleAPI.searchByQuery(`${params.type} restaurant`, hardCords, user.searchRadius).then(function (res) {
