@@ -19,7 +19,6 @@ function searchByQuery(query, location, radius) {
 
         response.on('end', function () {
             let places = JSON.parse(body);
-            console.log('Resolved places, will return to caller');
 
             let response = {
                 result: {
@@ -43,14 +42,14 @@ function searchByQuery(query, location, radius) {
 function getResultsString(data) {
     let openNow = [];
     data.forEach(function (el) {
-        if (el.hasOwnProperty('opening_hours') && !!el.opening_hours.open_now)
+        // if (el.hasOwnProperty('opening_hours') && !!el.opening_hours.open_now)
             openNow.push(el);
     });
     console.log(openNow);
     let names = '';
     let length = Math.min(openNow.length, 5);
     for (let i = 0; i < length; i++) {
-        names += data[i].name + '\n\n';
+        names += openNow[i].name + '\n\n';
     }
     return names;
 }
