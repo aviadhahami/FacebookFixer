@@ -12,7 +12,7 @@ module.exports = {
 		let request = app.textRequest(text, {sessionId: sessionId});
 		
 		request.on('response', function (response) {
-			// console.log(response);
+			console.log(response);
 			//
 			let action = response.result.action;
 			let parameters = response.result.parameters;
