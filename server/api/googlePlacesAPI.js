@@ -43,7 +43,7 @@ function searchByQuery(query, location, radius) {
 function getResultsString(data) {
     let openNow = [];
     data.forEach(function (el) {
-        if (el.opening_hours.open_now)
+        if (el.hasOwnProperty('opening_hours') && !!el.opening_hours.open_now)
             openNow.push(el);
     });
     console.log(openNow);
