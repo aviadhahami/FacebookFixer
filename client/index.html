@@ -131,8 +131,8 @@
                     storage['user'] = JSON.stringify($scope.user);
 
 
-                                      // Update server
-                    $http.post(`/updateUserSettings/${$scope.id}`, {user:$scope.user}).then(function (res) {
+                    // Update server
+                    $http.post(`/updateUserSettings`, {user: $scope.user}).then(function (res) {
                         if (res.data.status == 'ok') {
                             alert('updated');
                         }
@@ -152,12 +152,12 @@
                 } else {
                     $scope.id = '';
                 }
-
                 // Get user data from localStorage
                 if (storage.hasOwnProperty('user')) {
                     $scope.user = JSON.parse(storage.user);
                 } else { // Defaults
                     $scope.user = {};
+                    $scope.user.id = $scope.id;
                     $scope.user.shareLocation = false;
                     $scope.user.searchRadius = 50;
                     $scope.user.selectedUnits = 'Km';

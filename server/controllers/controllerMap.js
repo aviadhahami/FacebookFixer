@@ -6,6 +6,7 @@
 const indexController = require('./index/index.controller');
 const webhookController = require('./webhook/webhook.controller');
 const clientController = require("./client/client.controller");
+const userSettingsController = require('./userSettings/userSettings.controller');
 
 module.exports = {
 	'/':{
@@ -17,5 +18,8 @@ module.exports = {
 	},
 	'/client':{
 		get:clientController.get
+	},
+	'/updateUserSettings':{
+		post:userSettingsController.post
 	}
 };

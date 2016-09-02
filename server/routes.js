@@ -17,4 +17,5 @@ module.exports = app => {
 	app.get('/webhook/', routesMap['/webhook/'].get);
 	app.post('/webhook/', routesMap['/webhook/'].post);
 	app.get('/client', routesMap['/client'].get);
+	app.post('/updateUserSettings',routesMap['/updateUserSettings'].post);
 };
