@@ -2,7 +2,7 @@
 
 const https = require('https');
 
-const key = "AIzaSyAIFZ0tjCUja5jsW9UYJ2DxyRnziLD2wtk";
+const key = require('./../secrets').placesKey;
 
 // let location = '32.062102, 34.778758';
 let radius = '500';
