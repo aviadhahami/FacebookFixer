@@ -4,7 +4,9 @@
   "description": "",
   "main": "server/index.js",
   "scripts": {
-    "bot": "node server/index.js"
+    "bot": "node server/index.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,8 @@
     "q": "^1.4.1",
     "request": "^2.74.0",
     "twilio": "^2.9.2",
-    "yelp": "^1.0.1"
-  }
+    "yelp": "^1.0.1",
+    "snyk": "^1.189.0"
+  },
+  "snyk": true
 }
